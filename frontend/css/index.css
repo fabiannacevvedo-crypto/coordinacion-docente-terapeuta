@@ -120,3 +120,15 @@ footer {
 .hidden {
     display: none !important;
 }
+/* Estado inicial: oculto, un poco más abajo (30px) y transparente */
+.animar-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Estado final: cuando JS le clava la clase 'visible', vuelve a su lugar y se muestra */
+.animar-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
