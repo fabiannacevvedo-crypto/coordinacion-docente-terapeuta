@@ -2,10 +2,12 @@
 import express from "express";
 
 // Importa la función que inicia la conexión con la base de datos
-// import { startDB } from "./config/data.base.js";
+import { startDB } from "./backend/src/config/data.base.js";
 
-// Exporta el modelo Docente para que pueda ser utilizado en otros archivos
-// import docente from "./models/docente.models.js";
+// Importa los modelos Docente, Familiar y Terapeuta
+import docente from "./backend/src/models/docente.models.js";
+import familiar from "./backend/src/models/familiar.models.js";
+import terapeuta from "./backend/src/models/terapeuta.models.js";
 
 // Crea una instancia de la aplicación Express
 const app = express();
@@ -17,22 +19,17 @@ const PORT = 3001;
 app.use(express.json());
 
 // Ruta principal (GET /)
-// Cuando se acceda a http://localhost:3001/
-// responderá con un mensaje en formato JSON
 app.get("/", (req, res) => {
-    return res.json({
-        message: "Servidor todo listo"
-    });
+  return res.json({
+    message: "Servidor todo listo"
+  });
 });
 
 // Inicia el servidor y escucha en el puerto definido
 app.listen(PORT, async () => {
+  // Conecta con la base de datos antes de comenzar a trabajar
+  await startDB();
 
-    // Conecta con la base de datos antes de comenzar a trabajar
-    //await startDB();
-
-    // Muestra un mensaje en la consola indicando que el servidor está funcionando
-    console.log(
-        `Servidor corriendo en el puerto ${PORT} http://localhost:${PORT}`
-    );
+  // Muestra un mensaje en la consola indicando que el servidor está funcionando
+  console.log(`Servidor corriendo en el puerto ${PORT} http://localhost:${PORT}`);
 });
