@@ -11,14 +11,77 @@
 </head>
 
 <body>
-
+     <body>
+    <script src="../js/api.js"></script>
     <!-- HEADER -->
     <header class="hero-header text-white border-bottom">
-        <div class="container text-center py-3">
-            <h1 class="fw-bold rednec-title">Contacto Institucional</h1>
-            <p class="fs-6 text-light">Canales de comunicación y soporte</p>
+      <div class="container d-flex flex-column align-items-center py-3">
+        <div class="d-flex align-items-center mb-2">
+          <img
+            src="../assets/img/logo.png"
+            alt="Logo RED NEC"
+            class="img-fluid me-3 logo"
+          />
+          <h1 class="fw-bold m-0 rednec-title">RED NEC</h1>
         </div>
+        <p class="fs-6 mb-0 text-light">Nexo Educativo Colaborativo</p>
+      </div>
     </header>
+
+    <!-- NAVBAR -->
+    <nav
+      class="navbar navbar-expand-lg navbar-dark navbar-custom border-top border-bottom"
+    >
+      <div class="container">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="index.html">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="informacion.html"
+                >Información</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="seguimiento.html"
+                >Seguimiento</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="contacto.html">Contacto</a>
+            </li>
+          </ul>
+
+          <div class="d-flex gap-2">
+            <button
+              class="btn btn-outline-light fw-semibold"
+              data-bs-toggle="modal"
+              data-bs-target="#modal-login"
+            >
+              Iniciar Sesión
+            </button>
+            <button
+              class="btn btn-info text-white fw-semibold"
+              data-bs-toggle="modal"
+              data-bs-target="#modal-register"
+            >
+              Registrarse
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
 
     <!-- MAIN -->
     <main class="py-5 bg-light">

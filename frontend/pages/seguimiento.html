@@ -1,68 +1,647 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Seguimiento - RED NEC</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="../css/seguimiento.css" />
-</head>
-
-<body>
-
+  </head>
+  <body>
+    <script src="../js/api.js"></script>
+    <!-- HEADER -->
     <header class="hero-header text-white border-bottom">
-        <div class="container text-center py-3">
-            <h1 class="fw-bold rednec-title">Seguimiento Académico</h1>
-            <p class="fs-6 text-light">Monitoreo del progreso y bienestar de los estudiantes</p>
+      <div class="container d-flex flex-column align-items-center py-3">
+        <div class="d-flex align-items-center mb-2">
+          <img
+            src="../assets/img/logo.png"
+            alt="Logo RED NEC"
+            class="img-fluid me-3 logo"
+          />
+          <h1 class="fw-bold m-0 rednec-title">RED NEC</h1>
         </div>
+        <p class="fs-6 mb-0 text-light">Nexo Educativo Colaborativo</p>
+      </div>
     </header>
 
-    <main class="py-5 bg-light">
-        <div class="container">
-            <h2 class="fw-bold text-info mb-4">Panel de Avances</h2>
-            <p class="lead text-muted">
-                Esta sección servirá como base para el futuro módulo de reportes y analíticas del alumno.
-            </p>
+    <!-- NAVBAR -->
+    <nav
+      class="navbar navbar-expand-lg navbar-dark navbar-custom border-top border-bottom"
+    >
+      <div class="container">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <div class="alert alert-info mt-4">
-                Próximamente se integrarán gráficos dinámicos y reportes personalizados para cada estudiante.
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="index.html">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="informacion.html"
+                >Información</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="seguimiento.html"
+                >Seguimiento</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="contacto.html">Contacto</a>
+            </li>
+          </ul>
+
+          <div class="d-flex gap-2">
+            <button
+              class="btn btn-outline-light fw-semibold"
+              data-bs-toggle="modal"
+              data-bs-target="#modal-login"
+            >
+              Iniciar Sesión
+            </button>
+            <button
+              class="btn btn-info text-white fw-semibold"
+              data-bs-toggle="modal"
+              data-bs-target="#modal-register"
+            >
+              Registrarse
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+<style>
+      :root {
+        --nec-dark: #12222b;
+        --nec-accent: #17a2b8;
+        --nec-accent-soft: #e6f6f8;
+        --nec-warn: #f0ad4e;
+      }
+
+      body {
+        background-color: #f7fafb;
+      }
+
+      .hero-header,
+      .navbar-custom {
+        background-color: var(--nec-dark);
+      }
+
+      .rednec-title {
+        letter-spacing: 0.5px;
+      }
+
+      /* ---- Encabezado de sección de seguimiento ---- */
+      .seg-hero {
+        background: linear-gradient(135deg, var(--nec-dark) 0%, #1c3b47 100%);
+        color: #fff;
+        border-radius: 0 0 1.5rem 1.5rem;
+      }
+
+      .stat-card {
+        border: none;
+        border-radius: 1rem;
+        background: #fff;
+        box-shadow: 0 4px 14px rgba(18, 34, 43, 0.06);
+        transition: transform 0.15s ease;
+      }
+      .stat-card:hover {
+        transform: translateY(-3px);
+      }
+      .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--nec-accent);
+      }
+
+      /* ---- Filtros ---- */
+      .filtro-chip {
+        border: 1px solid #cfe4e8;
+        background: #fff;
+        color: #275a63;
+        border-radius: 999px;
+        padding: 0.35rem 0.9rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+      .filtro-chip.activo,
+      .filtro-chip:hover {
+        background: var(--nec-accent);
+        border-color: var(--nec-accent);
+        color: #fff;
+      }
+
+      /* ---- Tarjetas de alumnos ---- */
+      .alumno-card {
+        border: none;
+        border-radius: 1rem;
+        box-shadow: 0 2px 10px rgba(18, 34, 43, 0.07);
+        cursor: pointer;
+        transition: box-shadow 0.15s ease, transform 0.15s ease;
+      }
+      .alumno-card:hover {
+        box-shadow: 0 8px 22px rgba(18, 34, 43, 0.12);
+        transform: translateY(-2px);
+      }
+      .avatar-inicial {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--nec-accent-soft);
+        color: var(--nec-accent);
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .estado-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 6px;
+      }
+      .estado-verde { background: #2fb380; }
+      .estado-amarillo { background: var(--nec-warn); }
+      .estado-celeste { background: var(--nec-accent); }
+
+      .progreso-track {
+        height: 8px;
+        border-radius: 999px;
+        background: #e7eef0;
+        overflow: hidden;
+      }
+      .progreso-fill {
+        height: 100%;
+        border-radius: 999px;
+        background: var(--nec-accent);
+        transition: width 0.6s ease;
+      }
+
+      /* ---- Timeline dentro del panel de detalle ---- */
+      .timeline {
+        position: relative;
+        padding-left: 1.5rem;
+        border-left: 2px solid #dfeef1;
+      }
+      .timeline-item {
+        position: relative;
+        padding-bottom: 1.1rem;
+      }
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: -1.95rem;
+        top: 0.15rem;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--nec-accent);
+        border: 2px solid #fff;
+        box-shadow: 0 0 0 2px var(--nec-accent);
+      }
+      .timeline-item .autor {
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: var(--nec-accent);
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+      }
+      .timeline-item .fecha {
+        font-size: 0.75rem;
+        color: #8a9aa0;
+      }
+
+      .badge-area {
+        background: var(--nec-accent-soft);
+        color: #1a6e78;
+        font-weight: 600;
+        border-radius: 999px;
+      }
+
+      #panel-alumno {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+      }
+      #panel-alumno.abierto {
+        max-height: 2200px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <script src="../js/api.js"></script>
+
+    <!-- HEADER
+    <header class="hero-header text-white border-bottom">
+      <div class="container d-flex flex-column align-items-center py-3">
+        <div class="d-flex align-items-center mb-2">
+          <img
+            src="../assets/img/logo.png"
+            alt="Logo RED NEC"
+            class="img-fluid me-3 logo"
+            style="max-height: 48px"
+          />
+          <h1 class="fw-bold m-0 rednec-title">RED NEC</h1>
+        </div>
+        <p class="fs-6 mb-0 text-light">Nexo Educativo Colaborativo</p>
+      </div>
+    </header>
+
+    <! NAVBAR -->
+   
+
+    <main>
+      <!-- HERO DE SEGUIMIENTO -->
+      <section class="seg-hero py-5 mb-4">
+        <div class="container">
+          <h2 class="fw-bold mb-2">Seguimiento de alumnos</h2>
+          <p class="mb-0 opacity-75">
+            Un solo lugar para que docentes y terapeutas registren avances,
+            dejen observaciones y vean cómo viene cada chico.
+          </p>
+        </div>
+      </section>
+
+      <div class="container pb-5">
+        <!-- STATS -->
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-md-3">
+            <div class="stat-card p-3 text-center h-100">
+              <div class="stat-number" id="stat-total">0</div>
+              <div class="text-muted small">Alumnos activos</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="stat-card p-3 text-center h-100">
+              <div class="stat-number" id="stat-notas">0</div>
+              <div class="text-muted small">Observaciones (mes)</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="stat-card p-3 text-center h-100">
+              <div class="stat-number" style="color:#2fb380" id="stat-buen">0</div>
+              <div class="text-muted small">Progreso sostenido</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="stat-card p-3 text-center h-100">
+              <div class="stat-number" style="color:#f0ad4e" id="stat-atencion">0</div>
+              <div class="text-muted small">Requieren atención</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BUSCADOR + FILTROS -->
+        <div class="d-flex flex-column flex-md-row gap-3 align-items-md-center justify-content-between mb-3">
+          <input
+            type="search"
+            id="buscador"
+            class="form-control"
+            style="max-width: 320px"
+            placeholder="Buscar alumno..."
+          />
+          <div class="d-flex flex-wrap gap-2" id="filtros-area">
+            <button class="filtro-chip activo" data-area="todas">Todas las áreas</button>
+            <button class="filtro-chip" data-area="Comunicación">Comunicación</button>
+            <button class="filtro-chip" data-area="Motricidad">Motricidad</button>
+            <button class="filtro-chip" data-area="Autonomía">Autonomía</button>
+            <button class="filtro-chip" data-area="Socialización">Socialización</button>
+          </div>
+        </div>
+
+        <!-- LISTA DE ALUMNOS -->
+        <div class="row g-3" id="lista-alumnos"></div>
+
+        <!-- PANEL DE DETALLE (se despliega al hacer click en un alumno) -->
+        <div id="panel-alumno" class="mt-4">
+          <div class="card border-0 shadow-sm rounded-4 p-4">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <div class="d-flex align-items-center gap-3">
+                <div class="avatar-inicial fs-4" id="det-avatar">--</div>
+                <div>
+                  <h4 class="fw-bold mb-0" id="det-nombre">-</h4>
+                  <small class="text-muted" id="det-info">-</small>
+                </div>
+              </div>
+              <button class="btn-close" id="cerrar-panel" aria-label="Cerrar"></button>
             </div>
 
-            <table class="table table-striped mt-4">
-                <thead class="table-info">
-                    <tr>
-                        <th>Alumno</th>
-                        <th>Área</th>
-                        <th>Progreso</th>
-                        <th>Observaciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Juan Pérez</td>
-                        <td>Comunicación</td>
-                        <td>70%</td>
-                        <td>Mejoró la expresión oral.</td>
-                    </tr>
-                    <tr>
-                        <td>María Gómez</td>
-                        <td>Motricidad fina</td>
-                        <td>50%</td>
-                        <td>Avances en escritura y coordinación.</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="row g-4">
+              <div class="col-md-4">
+                <h6 class="fw-semibold text-info">Progreso general</h6>
+                <div class="progreso-track mb-1">
+                  <div class="progreso-fill" id="det-progreso-fill" style="width: 0%"></div>
+                </div>
+                <small class="text-muted" id="det-progreso-texto">0%</small>
+
+                <h6 class="fw-semibold text-info mt-4">Áreas de trabajo</h6>
+                <div class="d-flex flex-wrap gap-2" id="det-areas"></div>
+
+                <h6 class="fw-semibold text-info mt-4">Equipo asignado</h6>
+                <ul class="list-unstyled small text-muted mb-0" id="det-equipo"></ul>
+              </div>
+
+              <div class="col-md-8">
+                <h6 class="fw-semibold text-info">Línea de tiempo</h6>
+                <div class="timeline mb-3" id="det-timeline"></div>
+
+                <form id="form-nota" class="border-top pt-3">
+                  <label for="input-nota" class="form-label fw-semibold small">
+                    Agregar una observación
+                  </label>
+                  <div class="d-flex gap-2 flex-column flex-sm-row">
+                    <select id="select-area-nota" class="form-select form-select-sm" style="max-width: 200px">
+                      <option>Comunicación</option>
+                      <option>Motricidad</option>
+                      <option>Autonomía</option>
+                      <option>Socialización</option>
+                    </select>
+                    <input
+                      type="text"
+                      id="input-nota"
+                      class="form-control form-control-sm"
+                      placeholder="Ej: Hoy logró compartir el material sin ayuda..."
+                      required
+                    />
+                    <button type="submit" class="btn btn-info btn-sm text-white fw-semibold text-nowrap">
+                      Guardar
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <div id="contenedor-alertas" class="position-fixed top-0 end-0 p-3" style="z-index: 1080"></div>
     </main>
 
-    <footer class="py-3 bg-dark text-center text-light border-top">
-        <small>© 2026 RED NEC – Formosa</small>
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
-</body>
+   
 
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      // ------------------------------------------------------------------
+      // Datos de ejemplo (client-side). Reemplazar por fetch a tu API
+      // (../js/api.js) cuando tengas el backend de seguimiento listo.
+      // ------------------------------------------------------------------
+      const alumnos = [
+        {
+          id: 1,
+          nombre: "Valentina Gómez",
+          sala: "Sala Celeste · 4 años",
+          progreso: 72,
+          estado: "verde",
+          areas: ["Comunicación", "Socialización"],
+          equipo: ["Seño Ana (Docente)", "Lic. Romina Paz (Terapeuta)"],
+          notas: [
+            { autor: "Lic. Romina Paz", fecha: "24 jun", area: "Comunicación", texto: "Empezó a usar frases de 3 palabras para pedir ayuda." },
+            { autor: "Seño Ana", fecha: "18 jun", area: "Socialización", texto: "Compartió juguetes en la ronda sin que se lo pidieran." },
+          ],
+        },
+        {
+          id: 2,
+          nombre: "Bautista Ríos",
+          sala: "Sala Verde · 3 años",
+          progreso: 38,
+          estado: "amarillo",
+          areas: ["Motricidad", "Autonomía"],
+          equipo: ["Seño Carla (Docente)", "Lic. Diego Ibáñez (Terapeuta)"],
+          notas: [
+            { autor: "Lic. Diego Ibáñez", fecha: "27 jun", area: "Motricidad", texto: "Todavía le cuesta la pinza fina, seguimos con ejercicios de plastilina." },
+          ],
+        },
+        {
+          id: 3,
+          nombre: "Emilia Duarte",
+          sala: "Sala Amarilla · 5 años",
+          progreso: 88,
+          estado: "verde",
+          areas: ["Autonomía"],
+          equipo: ["Seño Ana (Docente)"],
+          notas: [
+            { autor: "Seño Ana", fecha: "29 jun", area: "Autonomía", texto: "Se puso sola la campera y guardó sus cosas en la mochila." },
+            { autor: "Seño Ana", fecha: "10 jun", area: "Autonomía", texto: "Necesita menos recordatorios para lavarse las manos." },
+          ],
+        },
+        {
+          id: 4,
+          nombre: "Thiago Acosta",
+          sala: "Sala Celeste · 4 años",
+          progreso: 21,
+          estado: "amarillo",
+          areas: ["Comunicación", "Motricidad"],
+          equipo: ["Seño Ana (Docente)", "Lic. Romina Paz (Terapeuta)"],
+          notas: [
+            { autor: "Lic. Romina Paz", fecha: "20 jun", area: "Comunicación", texto: "Sigue prefiriendo señalar antes que nombrar. Vamos a probar con pictogramas." },
+          ],
+        },
+      ];
+
+      let filtroArea = "todas";
+      let alumnoActivoId = null;
+
+      const $lista = document.getElementById("lista-alumnos");
+      const $panel = document.getElementById("panel-alumno");
+
+      function estadoColor(estado) {
+        return { verde: "estado-verde", amarillo: "estado-amarillo", celeste: "estado-celeste" }[estado] || "estado-celeste";
+      }
+
+      function iniciales(nombre) {
+        return nombre.split(" ").map((p) => p[0]).slice(0, 2).join("").toUpperCase();
+      }
+
+      function actualizarStats() {
+        document.getElementById("stat-total").textContent = alumnos.length;
+        document.getElementById("stat-notas").textContent = alumnos.reduce((a, al) => a + al.notas.length, 0);
+        document.getElementById("stat-buen").textContent = alumnos.filter((a) => a.progreso >= 60).length;
+        document.getElementById("stat-atencion").textContent = alumnos.filter((a) => a.progreso < 40).length;
+      }
+
+      function renderLista() {
+        const texto = document.getElementById("buscador").value.trim().toLowerCase();
+
+        const visibles = alumnos.filter((a) => {
+          const coincideArea = filtroArea === "todas" || a.areas.includes(filtroArea);
+          const coincideTexto = a.nombre.toLowerCase().includes(texto);
+          return coincideArea && coincideTexto;
+        });
+
+        $lista.innerHTML = "";
+
+        if (visibles.length === 0) {
+          $lista.innerHTML = `
+            <div class="col-12 text-center text-muted py-5">
+              No encontramos alumnos con ese filtro. Probá con otra búsqueda.
+            </div>`;
+          return;
+        }
+
+        visibles.forEach((a) => {
+          const col = document.createElement("div");
+          col.className = "col-12 col-md-6 col-lg-4";
+          col.innerHTML = `
+            <div class="alumno-card card p-3 h-100" data-id="${a.id}">
+              <div class="d-flex gap-3 align-items-center mb-2">
+                <div class="avatar-inicial">${iniciales(a.nombre)}</div>
+                <div class="flex-grow-1">
+                  <div class="fw-bold">${a.nombre}</div>
+                  <small class="text-muted">${a.sala}</small>
+                </div>
+              </div>
+              <div class="progreso-track mb-1">
+                <div class="progreso-fill" style="width:${a.progreso}%"></div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center mt-1">
+                <small class="text-muted"><span class="estado-dot ${estadoColor(a.estado)}"></span>${a.progreso}% de progreso</small>
+                <small class="text-info fw-semibold">Ver detalle →</small>
+              </div>
+            </div>`;
+          $lista.appendChild(col);
+        });
+
+        actualizarStats();
+      }
+
+      function abrirDetalle(id) {
+        const a = alumnos.find((x) => x.id === id);
+        if (!a) return;
+        alumnoActivoId = id;
+
+        document.getElementById("det-avatar").textContent = iniciales(a.nombre);
+        document.getElementById("det-nombre").textContent = a.nombre;
+        document.getElementById("det-info").textContent = a.sala;
+        document.getElementById("det-progreso-fill").style.width = a.progreso + "%";
+        document.getElementById("det-progreso-texto").textContent = a.progreso + "% completado";
+
+        document.getElementById("det-areas").innerHTML = a.areas
+          .map((ar) => `<span class="badge badge-area px-3 py-2">${ar}</span>`)
+          .join("");
+
+        document.getElementById("det-equipo").innerHTML = a.equipo
+          .map((m) => `<li>· ${m}</li>`)
+          .join("");
+
+        renderTimeline(a);
+
+        $panel.classList.add("abierto");
+        $panel.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function renderTimeline(a) {
+        const $tl = document.getElementById("det-timeline");
+        if (a.notas.length === 0) {
+          $tl.innerHTML = `<p class="text-muted small">Todavía no hay observaciones cargadas para este alumno.</p>`;
+          return;
+        }
+        $tl.innerHTML = a.notas
+          .map(
+            (n) => `
+            <div class="timeline-item">
+              <div class="autor">${n.autor} · <span class="fw-normal text-muted">${n.area}</span></div>
+              <div class="fecha mb-1">${n.fecha}</div>
+              <div>${n.texto}</div>
+            </div>`
+          )
+          .join("");
+      }
+
+      function mostrarAlerta(mensaje) {
+        const $cont = document.getElementById("contenedor-alertas");
+        const id = "t" + Date.now();
+        $cont.insertAdjacentHTML(
+          "beforeend",
+          `<div id="${id}" class="toast align-items-center text-white bg-info border-0 mb-2" role="alert">
+            <div class="d-flex">
+              <div class="toast-body">${mensaje}</div>
+              <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+          </div>`
+        );
+        const toastEl = document.getElementById(id);
+        const toast = new bootstrap.Toast(toastEl, { delay: 3000 });
+        toast.show();
+        toastEl.addEventListener("hidden.bs.toast", () => toastEl.remove());
+      }
+
+      // --- eventos ---
+      $lista.addEventListener("click", (e) => {
+        const card = e.target.closest(".alumno-card");
+        if (card) abrirDetalle(Number(card.dataset.id));
+      });
+
+      document.getElementById("cerrar-panel").addEventListener("click", () => {
+        $panel.classList.remove("abierto");
+      });
+
+      document.getElementById("buscador").addEventListener("input", renderLista);
+
+      document.querySelectorAll(".filtro-chip").forEach((chip) => {
+        chip.addEventListener("click", () => {
+          document.querySelectorAll(".filtro-chip").forEach((c) => c.classList.remove("activo"));
+          chip.classList.add("activo");
+          filtroArea = chip.dataset.area;
+          renderLista();
+        });
+      });
+
+      document.getElementById("form-nota").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const a = alumnos.find((x) => x.id === alumnoActivoId);
+        if (!a) return;
+
+        const texto = document.getElementById("input-nota").value.trim();
+        const area = document.getElementById("select-area-nota").value;
+        if (!texto) return;
+
+        a.notas.unshift({
+          autor: "Vos",
+          fecha: "Hoy",
+          area,
+          texto,
+        });
+
+        document.getElementById("input-nota").value = "";
+        renderTimeline(a);
+        renderLista();
+        mostrarAlerta("Observación guardada ✔");
+      });
+
+      // --- init ---
+      renderLista();
+    </script>
+  </body>
+</html>
+    <footer class="py-3 bg-dark text-center text-light border-top">
+      <small>© 2026 RED NEC – Formosa</small>
+    </footer>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
