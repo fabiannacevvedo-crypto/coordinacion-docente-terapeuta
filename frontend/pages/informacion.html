@@ -1,240 +1,134 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Información - RED NEC</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="../css/informacion.css" />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Información - RED NEC</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <style>
+    :root {
+      --nec-dark: #12222b;
+      --nec-accent: #17a2b8;
+      --nec-accent-soft: #e6f6f8;
+    }
+    body { background-color: #f7fafb; font-family: "Segoe UI", sans-serif; }
 
-  <body>
-   
-  <body>
-    <script src="../js/api.js"></script>
-    <!-- HEADER -->
-    <header class="hero-header text-white border-bottom">
-      <div class="container d-flex flex-column align-items-center py-3">
-        <div class="d-flex align-items-center mb-2">
-          <img
-            src="../assets/img/logo.png"
-            alt="Logo RED NEC"
-            class="img-fluid me-3 logo"
-          />
-          <h1 class="fw-bold m-0 rednec-title">RED NEC</h1>
-        </div>
-        <p class="fs-6 mb-0 text-light">Nexo Educativo Colaborativo</p>
-      </div>
-    </header>
+    /* NAVBAR UNIFICADO */
+    .navbar {
+      background: linear-gradient(90deg, #17a2b8 0%, #138496 100%);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+    .navbar-brand { font-weight: 700; letter-spacing: 0.5px; }
+    .nav-link { color: #e6f6f8 !important; transition: color 0.2s ease; }
+    .nav-link:hover, .nav-link.active { color: #fff !important; text-decoration: underline; }
 
-    <!-- NAVBAR -->
-    <nav
-      class="navbar navbar-expand-lg navbar-dark navbar-custom border-top border-bottom"
-    >
-      <div class="container">
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
+    .hero-info {
+      background: linear-gradient(135deg, var(--nec-dark) 0%, #1c3b47 100%);
+      color: #fff;
+      text-align: center;
+      padding: 4rem 0;
+      border-radius: 0 0 1.5rem 1.5rem;
+    }
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link fw-semibold" href="index.html">Inicio</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link fw-semibold" href="informacion.html"
-                >Información</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link fw-semibold" href="seguimiento.html"
-                >Seguimiento</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link fw-semibold" href="contacto.html">Contacto</a>
-            </li>
-          </ul>
+    .info-section {
+      background: #fff;
+      border-radius: 1rem;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+    .info-section h3 {
+      color: var(--nec-accent);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
 
-          <div class="d-flex gap-2">
-            <button
-              class="btn btn-outline-light fw-semibold"
-              data-bs-toggle="modal"
-              data-bs-target="#modal-login"
-            >
-              Iniciar Sesión
-            </button>
-            <button
-              class="btn btn-info text-white fw-semibold"
-              data-bs-toggle="modal"
-              data-bs-target="#modal-register"
-            >
-              Registrarse
-            </button>
-          </div>
+    footer {
+      background-color: var(--nec-dark);
+      color: #e6f6f8;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR UNIFICADO -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-info bg-opacity-90 shadow-sm sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold text-white" href="./index.html">RED NEC</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link fw-semibold" href="./index.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link fw-semibold active" href="./informacion.html">Información</a></li>
+          <li class="nav-item"><a class="nav-link fw-semibold" href="./seguimiento.html">Seguimiento</a></li>
+          <li class="nav-item"><a class="nav-link fw-semibold" href="./contacto.html">Contacto</a></li>
+        </ul>
+        <div class="d-flex gap-2">
+          <button class="btn btn-outline-light fw-semibold" data-bs-toggle="modal" data-bs-target="#modal-login">
+            <i class="bi bi-box-arrow-in-right me-1"></i> Iniciar Sesión
+          </button>
+          <button class="btn btn-light text-info fw-semibold" data-bs-toggle="modal" data-bs-target="#modal-register">
+            <i class="bi bi-person-plus me-1"></i> Registrarse
+          </button>
         </div>
       </div>
-    </nav>
+    </div>
+  </nav>
 
-    <!-- MAIN -->
-    <main>
-      <!-- VISIÓN -->
-      <section class="py-5 bg-light text-center">
-        <div class="container">
-          <h2 class="fw-bold mb-4" style="color: #001f3f">
-            Visión Institucional
-          </h2>
-          <p class="lead text-muted mb-5">
-            RED NEC busca integrar tecnología y pedagogía para fortalecer la
-            comunicación entre docentes, terapeutas y familias.
-          </p>
+  <!-- HERO -->
+  <section class="hero-info">
+    <div class="container">
+      <h1 class="fw-bold mb-2">Información Institucional</h1>
+      <p class="mb-0 opacity-75">Conocé más sobre nuestra red educativa colaborativa y sus programas.</p>
+    </div>
+  </section>
 
-          <!-- Galería de imágenes -->
-          <div class="row justify-content-center g-4">
-            <div class="col-md-5">
-              <img
-                src="../assets/img/vision.jpg"
-                alt="Docentes y alumnos trabajando"
-                class="img-fluid rounded shadow"
-              />
-            </div>
-            <div class="col-md-5">
-              <img
-                src="../assets/img/vision2.jpg"
-                alt="Educación colaborativa con tecnología"
-                class="img-fluid rounded shadow"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- EJES DE DESARROLLO -->
-      <section class="py-5 bg-white">
-        <div class="container">
-          <h2 class="fw-bold mb-4 text-center" style="color: #001f3f">
-            Ejes de Desarrollo
-          </h2>
-          <div class="row g-4">
-            <div class="col-md-3">
-              <div class="card shadow-sm h-100 text-center">
-                <div class="card-body">
-                  <h5 class="card-title">📘 Inclusión</h5>
-                  <p class="card-text">
-                    Multisensorial y accesibilidad digital.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="card shadow-sm h-100 text-center">
-                <div class="card-body">
-                  <h5 class="card-title">🤝 Coordinación</h5>
-                  <p class="card-text">
-                    Trabajo interdisciplinario entre docentes y terapeutas.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="card shadow-sm h-100 text-center">
-                <div class="card-body">
-                  <h5 class="card-title">📊 Seguimiento</h5>
-                  <p class="card-text">Progreso académico y emocional.</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="card shadow-sm h-100 text-center">
-                <div class="card-body">
-                  <h5 class="card-title">💡 Innovación</h5>
-                  <p class="card-text">Herramientas educativas interactivas.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <p class="mt-4 text-muted text-center">
-            Próximamente se incorporarán módulos de análisis de datos y reportes
-            institucionales para medir el impacto educativo.
-          </p>
-        </div>
-      </section>
-
-      <!-- HISTORIA -->
-      <section class="py-5 bg-light">
-        <div class="container">
-          <h2 class="fw-bold mb-4 text-center" style="color: #001f3f">
-            Nuestra Historia
-          </h2>
-          <div class="row align-items-center">
-            <div class="col-md-6">
-              <p class="text-muted">
-                RED NEC nació como un proyecto de carrera en Formosa, con el
-                objetivo de reducir las barreras de comunicación entre docentes,
-                terapeutas y familias. con el objetivo de trabajar a futuro en
-                proyectos de inclusión digital, capacitación docente y
-                acompañamiento familiar.
-              </p>
-              <p class="text-muted">
-                Hoy somos una red que impulsa la innovación educativa con
-                herramientas tecnológicas accesibles y colaborativas.
-              </p>
-            </div>
-            <div class="col-md-6 text-center">
-              <img
-                src="../assets/img/historia.jpg"
-                alt="Historia RED NEC"
-                class="img-fluid rounded shadow"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- LEMA -->
-      <section
-        class="py-5 text-white text-center"
-        style="background-color: #f4f4f5"
-      >
-        <h3 class="fw-bold" style="color: #001f3f">“Sinergia en el Aula”</h3>
-        <p style="color: #001f3f">
-          Un compromiso con la inclusión y el aprendizaje integral.
+  <!-- MAIN -->
+  <main class="py-5">
+    <div class="container">
+      <div class="info-section">
+        <h3>¿Qué es RED NEC?</h3>
+        <p>
+          RED NEC (Nexo Educativo Colaborativo) es una plataforma que conecta docentes, terapeutas y familias
+          para mejorar la comunicación y el seguimiento de los procesos educativos y terapéuticos de cada alumno.
         </p>
-        <a href="seguimiento.html" class="btn btn-outline-dark fw-semibold mt-3"
-          >Explorar recursos</a
-        >
-      </section>
-    </main>
-
-    <!-- FOOTER -->
-    <footer
-      class="py-4 text-light border-top"
-      style="background-color: #001f3f"
-    >
-      <div class="container text-center">
-        <small>© 2026 RED NEC - Formosa</small>
-        <div class="mt-2">
-          <a href="https://facebook.com" class="text-light me-3">Facebook</a>
-          <a href="https://instagram.com" class="text-light me-3">Instagram</a>
-          <a href="contacto.html" class="text-light">Contacto</a>
-        </div>
       </div>
-    </footer>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+      <div class="info-section">
+        <h3>Objetivos</h3>
+        <ul>
+          <li>Favorecer la integración entre equipos interdisciplinarios.</li>
+          <li>Optimizar el seguimiento de los avances individuales.</li>
+          <li>Promover la inclusión educativa mediante herramientas digitales accesibles.</li>
+        </ul>
+      </div>
+
+      <div class="info-section">
+        <h3>Programas y Áreas</h3>
+        <p>
+          Nuestra red trabaja en distintas áreas del desarrollo infantil: comunicación, motricidad, autonomía y socialización.
+          Cada programa está diseñado para adaptarse a las necesidades de cada institución y comunidad educativa.
+        </p>
+      </div>
+
+      <div class="info-section">
+        <h3>Equipo de trabajo</h3>
+        <p>
+          RED NEC está conformada por profesionales de la educación, psicopedagogía, terapia ocupacional y tecnología educativa.
+          Juntos impulsamos proyectos que fortalecen la inclusión y la colaboración.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="py-3 text-center border-top">
+    <small>© 2026 RED NEC – Formosa</small>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

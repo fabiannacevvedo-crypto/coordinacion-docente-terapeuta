@@ -1,121 +1,118 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contacto - RED NEC</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="../css/contacto.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contacto - RED NEC</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <style>
+    :root {
+      --nec-dark: #12222b;
+      --nec-accent: #17a2b8;
+      --nec-accent-soft: #e6f6f8;
+    }
+    body { background:#f7fafb; font-family:"Segoe UI",sans-serif; }
+
+    /* NAVBAR UNIFICADO */
+    .navbar {
+      background: linear-gradient(90deg, #17a2b8 0%, #138496 100%);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .navbar-brand { font-weight: 700; letter-spacing: 0.5px; }
+    .nav-link { color:#e6f6f8 !important; transition: color 0.2s ease; }
+    .nav-link:hover, .nav-link.active { color:#fff !important; text-decoration: underline; }
+
+    .hero-contacto {
+      background: linear-gradient(135deg, var(--nec-dark) 0%, #1c3b47 100%);
+      color:#fff; text-align:center; padding:4rem 0;
+      border-radius:0 0 1.5rem 1.5rem;
+    }
+
+    .contact-card {
+      background:#fff;
+      border-radius:1rem;
+      box-shadow:0 4px 14px rgba(0,0,0,.08);
+      padding:2rem;
+      margin-bottom:2rem;
+    }
+
+    footer { background-color: var(--nec-dark); color:#e6f6f8; font-size:.9rem; }
+  </style>
 </head>
-
 <body>
-     <body>
-    <script src="../js/api.js"></script>
-    <!-- HEADER -->
-    <header class="hero-header text-white border-bottom">
-      <div class="container d-flex flex-column align-items-center py-3">
-        <div class="d-flex align-items-center mb-2">
-          <img
-            src="../assets/img/logo.png"
-            alt="Logo RED NEC"
-            class="img-fluid me-3 logo"
-          />
-          <h1 class="fw-bold m-0 rednec-title">RED NEC</h1>
+  <!-- NAVBAR UNIFICADO -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-info bg-opacity-90 shadow-sm sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold text-white" href="./index.html">RED NEC</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link fw-semibold" href="./index.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link fw-semibold" href="./informacion.html">Información</a></li>
+          <li class="nav-item"><a class="nav-link fw-semibold" href="./seguimiento.html">Seguimiento</a></li>
+          <li class="nav-item"><a class="nav-link fw-semibold active" href="./contacto.html">Contacto</a></li>
+        </ul>
+        <div class="d-flex gap-2">
+          <button class="btn btn-outline-light fw-semibold" data-bs-toggle="modal" data-bs-target="#modal-login">
+            <i class="bi bi-box-arrow-in-right me-1"></i> Iniciar Sesión
+          </button>
+          <button class="btn btn-light text-info fw-semibold" data-bs-toggle="modal" data-bs-target="#modal-register">
+            <i class="bi bi-person-plus me-1"></i> Registrarse
+          </button>
         </div>
-        <p class="fs-6 mb-0 text-light">Nexo Educativo Colaborativo</p>
       </div>
-    </header>
+    </div>
+  </nav>
 
-    <!-- NAVBAR -->
-    <nav
-      class="navbar navbar-expand-lg navbar-dark navbar-custom border-top border-bottom"
-    >
-      <div class="container">
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
+  <!-- HERO -->
+  <section class="hero-contacto">
+    <div class="container">
+      <h1 class="fw-bold mb-2">Contacto</h1>
+      <p class="mb-0 opacity-75">Comunicate con nosotros para más información y asesoramiento.</p>
+    </div>
+  </section>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link fw-semibold" href="index.html">Inicio</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link fw-semibold" href="informacion.html"
-                >Información</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link fw-semibold" href="seguimiento.html"
-                >Seguimiento</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link fw-semibold" href="contacto.html">Contacto</a>
-            </li>
-          </ul>
-
-          <div class="d-flex gap-2">
-            <button
-              class="btn btn-outline-light fw-semibold"
-              data-bs-toggle="modal"
-              data-bs-target="#modal-login"
-            >
-              Iniciar Sesión
-            </button>
-            <button
-              class="btn btn-info text-white fw-semibold"
-              data-bs-toggle="modal"
-              data-bs-target="#modal-register"
-            >
-              Registrarse
-            </button>
+  <!-- MAIN -->
+  <main class="py-5">
+    <div class="container">
+      <div class="contact-card">
+        <h3 class="fw-bold text-info mb-3">Formulario de contacto</h3>
+        <form>
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre completo</label>
+            <input type="text" class="form-control" id="nombre" placeholder="Tu nombre"/>
           </div>
-        </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Correo electrónico</label>
+            <input type="email" class="form-control" id="email" placeholder="ejemplo@correo.com"/>
+          </div>
+          <div class="mb-3">
+            <label for="mensaje" class="form-label">Mensaje</label>
+            <textarea class="form-control" id="mensaje" rows="4" placeholder="Escribe tu consulta..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-info text-white fw-semibold">
+            <i class="bi bi-send me-1"></i> Enviar
+          </button>
+        </form>
       </div>
-    </nav>
 
+      <div class="contact-card">
+        <h3 class="fw-bold text-info mb-3">Información de contacto</h3>
+        <p><i class="bi bi-envelope me-2"></i> contacto@rednec.org</p>
+        <p><i class="bi bi-telephone me-2"></i> +54 370 1234567</p>
+        <p><i class="bi bi-geo-alt me-2"></i> Formosa, Argentina</p>
+      </div>
+    </div>
+  </main>
 
-    <!-- MAIN -->
-    <main class="py-5 bg-light">
-        <div class="container">
-            <h2 class="fw-bold text-info mb-4">Formulario de Contacto</h2>
-            <form class="contact-form">
-                <div class="mb-3">
-                    <label for="nombre" class="form-label">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" placeholder="Tu nombre completo">
-                </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Correo electrónico</label>
-                    <input type="email" class="form-control" id="email" placeholder="tuemail@ejemplo.com">
-                </div>
-                <div class="mb-3">
-                    <label for="mensaje" class="form-label">Mensaje</label>
-                    <textarea class="form-control" id="mensaje" rows="4" placeholder="Escribe tu mensaje"></textarea>
-                </div>
-                <button type="submit" class="btn btn-info">Enviar</button>
-            </form>
+  <!-- FOOTER -->
+  <footer class="py-3 text-center border-top">
+    <small>© 2026 RED NEC – Formosa</small>
+  </footer>
 
-            <div class="alert alert-secondary mt-4">
-                Próximamente se integrará un sistema de mensajería interna y seguimiento de consultas.
-            </div>
-        </div>
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="py-3 bg-dark text-center text-light border-top">
-        <small>© 2026 RED NEC – Formosa</small>
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
