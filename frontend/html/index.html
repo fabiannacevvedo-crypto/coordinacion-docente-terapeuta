@@ -1,15 +1,19 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
-    <title>Login y Registro</title>
+    <title>Acceso | Sistema de usuarios</title>
 
     <style>
+
+        /* =========================================
+           CONFIGURACIÓN GENERAL
+        ========================================= */
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -19,420 +23,986 @@
 
         body {
             min-height: 100vh;
+
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #f2f2f2;
+
+            padding: 30px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e5e7eb,
+                    #f3f4f6,
+                    #dbe1e8
+                );
         }
+
+
+        /* =========================================
+           CONTENEDOR PRINCIPAL
+        ========================================= */
 
         .contenedor {
-            width: 400px;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+
+            width: 100%;
+            max-width: 950px;
+
+            background: #ffffff;
+
+            border-radius: 24px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.18);
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
         }
 
-        h1 {
-            text-align: center;
+
+        /* =========================================
+           PANEL IZQUIERDO
+        ========================================= */
+
+        .presentacion {
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #1f2937,
+                    #374151,
+                    #4b5563
+                );
+
+            color: white;
+
+            padding: 50px 40px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            position: relative;
+
+            box-shadow:
+                0 0 15px rgba(0, 180, 216, 0.25),
+                0 0 25px rgba(0, 180, 216, 0.12);
+        }
+
+
+        /* Círculo decorativo superior */
+
+        .presentacion::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 220px;
+            height: 220px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255, 255, 255, 0.04);
+
+            top: -80px;
+            right: -80px;
+        }
+
+
+        /* Círculo decorativo inferior */
+
+        .presentacion::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(0, 180, 216, 0.08);
+
+            bottom: -70px;
+            left: -70px;
+        }
+
+
+        /* =========================================
+           TEXTO DEL PANEL
+        ========================================= */
+
+        .presentacion h1 {
+
+            font-size: 38px;
+
+            margin-bottom: 20px;
+
+            position: relative;
+
+            z-index: 1;
+
+            color: #f8fafc;
+        }
+
+
+        .presentacion p {
+
+            font-size: 17px;
+
+            line-height: 1.7;
+
+            color: #d1d5db;
+
+            position: relative;
+
+            z-index: 1;
+        }
+
+
+        .icono {
+
+            font-size: 60px;
+
+            margin-bottom: 20px;
+
+            position: relative;
+
+            z-index: 1;
+
+            filter:
+                drop-shadow(
+                    0 0 8px rgba(0, 180, 216, 0.5)
+                );
+        }
+
+
+        /* =========================================
+           PANEL DERECHO
+        ========================================= */
+
+        .formularios {
+
+            padding: 40px;
+
+            background: #ffffff;
+        }
+
+
+        .formularios h2 {
+
+            color: #1f2937;
+
+            margin-bottom: 20px;
+
+            font-size: 24px;
+        }
+
+
+        /* =========================================
+           FORMULARIOS
+        ========================================= */
+
+        form {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 14px;
+
             margin-bottom: 25px;
         }
 
-        h2 {
-            margin-bottom: 15px;
+
+        /* =========================================
+           GRUPOS DE INPUT
+        ========================================= */
+
+        .grupo-input {
+
+            position: relative;
         }
 
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+
+        .grupo-input span {
+
+            position: absolute;
+
+            left: 14px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #64748b;
+
+            font-size: 18px;
+
+            z-index: 2;
         }
+
+
+        /* =========================================
+           INPUTS
+        ========================================= */
 
         input {
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 16px;
+
+            width: 100%;
+
+            padding: 13px 15px 13px 45px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 10px;
+
+            font-size: 15px;
+
+            outline: none;
+
+            transition: all 0.3s ease;
+
+            background: #f9fafb;
         }
+
+
+        input:hover {
+
+            border-color: #9ca3af;
+        }
+
+
+        input:focus {
+
+            border-color: #00b4d8;
+
+            background: white;
+
+            box-shadow:
+                0 0 10px rgba(0, 180, 216, 0.35),
+                0 0 18px rgba(0, 180, 216, 0.15);
+        }
+
+
+        /* =========================================
+           BOTONES
+        ========================================= */
 
         button {
-            padding: 12px;
+
+            width: 100%;
+
+            padding: 13px;
+
             border: none;
-            border-radius: 6px;
-            background: #2563eb;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #374151,
+                    #1f2937
+                );
+
             color: white;
+
             font-size: 16px;
+
+            font-weight: bold;
+
             cursor: pointer;
+
+            transition: all 0.3s ease;
+
+            box-shadow:
+                0 5px 15px rgba(0, 0, 0, 0.15);
         }
+
 
         button:hover {
-            background: #1d4ed8;
+
+            transform: translateY(-2px);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #4b5563,
+                    #374151
+                );
+
+            box-shadow:
+                0 0 12px rgba(0, 180, 216, 0.5),
+                0 0 22px rgba(0, 180, 216, 0.2);
         }
+
+
+        button:active {
+
+            transform: translateY(0);
+        }
+
+
+        /* =========================================
+           SEPARADOR
+        ========================================= */
 
         .separador {
-            margin: 30px 0;
-            border-top: 1px solid #ddd;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin: 25px 0;
+
+            color: #9ca3af;
+
+            font-size: 13px;
         }
+
+
+        .separador::before,
+        .separador::after {
+
+            content: "";
+
+            height: 1px;
+
+            background: #e5e7eb;
+
+            flex: 1;
+        }
+
+
+        /* =========================================
+           MENSAJES
+        ========================================= */
 
         #mensaje {
-            margin-top: 20px;
+
+            margin-top: 15px;
+
             text-align: center;
+
             font-weight: bold;
+
+            min-height: 22px;
+
+            line-height: 1.5;
         }
+
+
+        /* =========================================
+           PERFIL
+        ========================================= */
 
         #perfil {
+
             display: none;
+
             margin-top: 25px;
-            padding: 15px;
-            background: #e8f5e9;
-            border-radius: 8px;
+
+            padding: 20px;
+
+            background: #f1f5f9;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 0 12px rgba(0, 180, 216, 0.12);
         }
+
+
+        #perfil h2 {
+
+            color: #374151;
+
+            margin-bottom: 10px;
+        }
+
+
+        #datosPerfil {
+
+            color: #475569;
+
+            line-height: 1.8;
+        }
+
+
+        /* =========================================
+           BOTÓN CERRAR SESIÓN
+        ========================================= */
 
         #logout {
+
             margin-top: 15px;
-            background: #dc2626;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ef4444,
+                    #dc2626
+                );
         }
 
+
         #logout:hover {
-            background: #b91c1c;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f87171,
+                    #dc2626
+                );
+
+            box-shadow:
+                0 0 12px rgba(239, 68, 68, 0.4);
         }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 750px) {
+
+            body {
+
+                padding: 15px;
+            }
+
+
+            .contenedor {
+
+                grid-template-columns: 1fr;
+
+                max-width: 500px;
+            }
+
+
+            .presentacion {
+
+                padding: 35px 30px;
+
+                text-align: center;
+            }
+
+
+            .presentacion h1 {
+
+                font-size: 30px;
+            }
+
+
+            .presentacion p {
+
+                font-size: 15px;
+            }
+
+
+            .icono {
+
+                font-size: 45px;
+            }
+
+
+            .formularios {
+
+                padding: 30px 25px;
+            }
+
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
+
+    <!-- =========================================
+         CONTENEDOR PRINCIPAL
+    ========================================== -->
+
     <div class="contenedor">
 
-        <h1>Sistema de usuarios</h1>
 
-        <!-- ========================= -->
-        <!-- FORMULARIO DE REGISTRO -->
-        <!-- ========================= -->
+        <!-- =====================================
+             PRESENTACIÓN
+        ====================================== -->
 
-        <h2>Registrarse</h2>
+        <div class="presentacion">
 
-        <form id="registroForm">
-
-            <input
-                type="text"
-                id="nombre"
-                placeholder="Nombre"
-                required
-            >
-
-            <input
-                type="email"
-                id="emailRegistro"
-                placeholder="Email"
-                required
-            >
-
-            <input
-                type="password"
-                id="passwordRegistro"
-                placeholder="Contraseña"
-                required
-            >
-
-            <button type="submit">
-                Registrarse
-            </button>
-
-        </form>
+            <div class="icono">
+                👤
+            </div>
 
 
-        <div class="separador"></div>
+            <h1>
+                Bienvenido
+            </h1>
 
 
-        <!-- ========================= -->
-        <!-- FORMULARIO DE LOGIN -->
-        <!-- ========================= -->
+            <p>
+                Accedé a tu cuenta o registrate para
+                comenzar a utilizar nuestro sistema.
+            </p>
 
-        <h2>Iniciar sesión</h2>
+        </div>
 
-        <form id="loginForm">
 
-            <input
-                type="email"
-                id="emailLogin"
-                placeholder="Email"
-                required
-            >
+        <!-- =====================================
+             FORMULARIOS
+        ====================================== -->
 
-            <input
-                type="password"
-                id="passwordLogin"
-                placeholder="Contraseña"
-                required
-            >
+        <div class="formularios">
 
-            <button type="submit">
+
+            <!-- =================================
+                 REGISTRO
+            ================================== -->
+
+            <h2>
+                Crear una cuenta
+            </h2>
+
+
+            <form id="registroForm">
+
+
+                <!-- NOMBRE -->
+
+                <div class="grupo-input">
+
+                    <span>👤</span>
+
+                    <input
+                        type="text"
+                        id="nombre"
+                        placeholder="Nombre"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="grupo-input">
+
+                    <span>✉️</span>
+
+                    <input
+                        type="email"
+                        id="emailRegistro"
+                        placeholder="Correo electrónico"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- CONTRASEÑA -->
+
+                <div class="grupo-input">
+
+                    <span>🔒</span>
+
+                    <input
+                        type="password"
+                        id="passwordRegistro"
+                        placeholder="Contraseña"
+                        required
+                    >
+
+                </div>
+
+
+                <button type="submit">
+                    Registrarse
+                </button>
+
+
+            </form>
+
+
+            <!-- =================================
+                 SEPARADOR
+            ================================== -->
+
+            <div class="separador">
+                O
+            </div>
+
+
+            <!-- =================================
+                 LOGIN
+            ================================== -->
+
+            <h2>
                 Iniciar sesión
-            </button>
-
-        </form>
+            </h2>
 
 
-        <!-- MENSAJES -->
-
-        <div id="mensaje"></div>
+            <form id="loginForm">
 
 
-        <!-- ========================= -->
-        <!-- PERFIL -->
-        <!-- ========================= -->
+                <!-- EMAIL -->
 
-        <div id="perfil">
+                <div class="grupo-input">
 
-            <h2>Perfil</h2>
+                    <span>✉️</span>
 
-            <p id="datosPerfil"></p>
+                    <input
+                        type="email"
+                        id="emailLogin"
+                        placeholder="Correo electrónico"
+                        required
+                    >
 
-            <button id="logout">
-                Cerrar sesión
-            </button>
+                </div>
+
+
+                <!-- CONTRASEÑA -->
+
+                <div class="grupo-input">
+
+                    <span>🔒</span>
+
+                    <input
+                        type="password"
+                        id="passwordLogin"
+                        placeholder="Contraseña"
+                        required
+                    >
+
+                </div>
+
+
+                <button type="submit">
+                    Iniciar sesión
+                </button>
+
+
+            </form>
+
+
+            <!-- =================================
+                 MENSAJES
+            ================================== -->
+
+            <div id="mensaje"></div>
+
+
+            <!-- =================================
+                 PERFIL
+            ================================== -->
+
+            <div id="perfil">
+
+                <h2>
+                    Perfil
+                </h2>
+
+
+                <p id="datosPerfil"></p>
+
+
+                <button id="logout">
+                    Cerrar sesión
+                </button>
+
+            </div>
+
 
         </div>
 
     </div>
 
 
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
+
     <script>
 
-        // URL BASE DE NUESTRO BACKEND
+
+        // =========================================
+        // URL BASE DEL BACKEND
+        // =========================================
 
         const API = "http://localhost:3001";
 
 
+        // =========================================
         // ELEMENTOS DEL HTML
+        // =========================================
 
-        const registroForm = document.getElementById("registroForm");
-        const loginForm = document.getElementById("loginForm");
-
-        const mensaje = document.getElementById("mensaje");
-
-        const perfil = document.getElementById("perfil");
-        const datosPerfil = document.getElementById("datosPerfil");
-
-        const logout = document.getElementById("logout");
+        const registroForm =
+            document.getElementById("registroForm");
 
 
-        // =====================================================
+        const loginForm =
+            document.getElementById("loginForm");
+
+
+        const mensaje =
+            document.getElementById("mensaje");
+
+
+        const perfil =
+            document.getElementById("perfil");
+
+
+        const datosPerfil =
+            document.getElementById("datosPerfil");
+
+
+        const logout =
+            document.getElementById("logout");
+
+
+        // =========================================
         // REGISTRO
-        // =====================================================
+        // =========================================
 
-        registroForm.addEventListener("submit", async function(event) {
+        registroForm.addEventListener(
+            "submit",
+            async function(event) {
 
-            // Evita que el formulario recargue la página
-
-            event.preventDefault();
-
-
-            // Obtener datos del formulario
-
-            const nombre =
-                document.getElementById("nombre").value;
-
-            const email =
-                document.getElementById("emailRegistro").value;
-
-            const password =
-                document.getElementById("passwordRegistro").value;
+                event.preventDefault();
 
 
-            try {
+                const nombre =
+                    document.getElementById(
+                        "nombre"
+                    ).value;
 
-                // Enviar datos al backend
 
-                const respuesta = await fetch(
-                    `${API}/auth/register`,
-                    {
-                        method: "POST",
+                const email =
+                    document.getElementById(
+                        "emailRegistro"
+                    ).value;
 
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
 
-                        body: JSON.stringify({
-                            nombre,
-                            email,
-                            password
-                        })
+                const password =
+                    document.getElementById(
+                        "passwordRegistro"
+                    ).value;
+
+
+                try {
+
+                    const respuesta =
+                        await fetch(
+                            `${API}/auth/register`,
+                            {
+
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body: JSON.stringify({
+                                    nombre,
+                                    email,
+                                    password
+                                })
+
+                            }
+                        );
+
+
+                    const datos =
+                        await respuesta.json();
+
+
+                    if (respuesta.ok) {
+
+                        mensaje.style.color =
+                            "#16a34a";
+
+                        mensaje.textContent =
+                            datos.msg;
+
+                        registroForm.reset();
+
+                    } else {
+
+                        mensaje.style.color =
+                            "#dc2626";
+
+                        mensaje.textContent =
+                            datos.msg;
                     }
-                );
 
 
-                // Convertir respuesta a JSON
+                } catch (error) {
 
-                const datos = await respuesta.json();
-
-
-                // Mostrar mensaje
-
-                if (respuesta.ok) {
-
-                    mensaje.style.color = "green";
+                    mensaje.style.color =
+                        "#dc2626";
 
                     mensaje.textContent =
-                        datos.msg;
+                        "No se pudo conectar con el servidor.";
 
-                    registroForm.reset();
-
-                } else {
-
-                    mensaje.style.color = "red";
-
-                    mensaje.textContent =
-                        datos.msg;
+                    console.error(error);
                 }
 
-
-            } catch (error) {
-
-                mensaje.style.color = "red";
-
-                mensaje.textContent =
-                    "No se pudo conectar con el servidor.";
-
-                console.error(error);
             }
+        );
 
-        });
 
-
-        // =====================================================
+        // =========================================
         // LOGIN
-        // =====================================================
+        // =========================================
 
-        loginForm.addEventListener("submit", async function(event) {
+        loginForm.addEventListener(
+            "submit",
+            async function(event) {
 
-            // Evita recargar la página
-
-            event.preventDefault();
-
-
-            // Obtener datos
-
-            const email =
-                document.getElementById("emailLogin").value;
-
-            const password =
-                document.getElementById("passwordLogin").value;
+                event.preventDefault();
 
 
-            try {
+                const email =
+                    document.getElementById(
+                        "emailLogin"
+                    ).value;
 
-                // Enviar datos al backend
 
-                const respuesta = await fetch(
-                    `${API}/auth/login`,
-                    {
-                        method: "POST",
+                const password =
+                    document.getElementById(
+                        "passwordLogin"
+                    ).value;
 
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
 
-                        body: JSON.stringify({
-                            email,
-                            password
-                        })
+                try {
+
+                    const respuesta =
+                        await fetch(
+                            `${API}/auth/login`,
+                            {
+
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body: JSON.stringify({
+                                    email,
+                                    password
+                                })
+
+                            }
+                        );
+
+
+                    const datos =
+                        await respuesta.json();
+
+
+                    if (respuesta.ok) {
+
+                        mensaje.style.color =
+                            "#16a34a";
+
+                        mensaje.textContent =
+                            datos.msg;
+
+
+                        // Guardar token
+
+                        localStorage.setItem(
+                            "token",
+                            datos.token
+                        );
+
+
+                        loginForm.reset();
+
+
+                        obtenerPerfil();
+
+
+                    } else {
+
+                        mensaje.style.color =
+                            "#dc2626";
+
+                        mensaje.textContent =
+                            datos.msg;
                     }
-                );
 
 
-                // Convertir respuesta
+                } catch (error) {
 
-                const datos = await respuesta.json();
-
-
-                if (respuesta.ok) {
-
-                    mensaje.style.color = "green";
+                    mensaje.style.color =
+                        "#dc2626";
 
                     mensaje.textContent =
-                        datos.msg;
+                        "No se pudo conectar con el servidor.";
 
-
-                    // =========================================
-                    // GUARDAMOS EL TOKEN
-                    // =========================================
-
-                    localStorage.setItem(
-                        "token",
-                        datos.token
-                    );
-
-
-                    // Limpiar formulario
-
-                    loginForm.reset();
-
-
-                    // Intentar obtener el perfil
-
-                    obtenerPerfil();
-
-
-                } else {
-
-                    mensaje.style.color = "red";
-
-                    mensaje.textContent =
-                        datos.msg;
+                    console.error(error);
                 }
 
-
-            } catch (error) {
-
-                mensaje.style.color = "red";
-
-                mensaje.textContent =
-                    "No se pudo conectar con el servidor.";
-
-                console.error(error);
             }
+        );
 
-        });
 
-
-        // =====================================================
+        // =========================================
         // OBTENER PERFIL
-        // =====================================================
+        // =========================================
 
         async function obtenerPerfil() {
-
-            // Obtener token guardado
 
             const token =
                 localStorage.getItem("token");
 
 
-            // Si no existe token
-
             if (!token) {
 
                 return;
+
             }
 
 
             try {
 
-                // Petición protegida
+                const respuesta =
+                    await fetch(
+                        `${API}/perfil`,
+                        {
 
-                const respuesta = await fetch(
-                    `${API}/perfil`,
-                    {
-                        method: "GET",
+                            method: "GET",
 
-                        headers: {
+                            headers: {
 
-                            "Authorization":
-                                `Bearer ${token}`
+                                "Authorization":
+                                    `Bearer ${token}`
+
+                            }
 
                         }
-                    }
-                );
+                    );
 
 
                 const datos =
@@ -441,7 +1011,8 @@
 
                 if (respuesta.ok) {
 
-                    perfil.style.display = "block";
+                    perfil.style.display =
+                        "block";
 
 
                     datosPerfil.innerHTML = `
@@ -449,58 +1020,66 @@
                         Email: ${datos.usuario.email}
                     `;
 
+
                 } else {
 
-                    // Token inválido
+                    localStorage.removeItem(
+                        "token"
+                    );
 
-                    localStorage.removeItem("token");
+                    perfil.style.display =
+                        "none";
 
-                    perfil.style.display = "none";
                 }
 
 
             } catch (error) {
 
                 console.error(error);
+
             }
 
         }
 
 
-        // =====================================================
+        // =========================================
         // CERRAR SESIÓN
-        // =====================================================
+        // =========================================
 
-        logout.addEventListener("click", function() {
+        logout.addEventListener(
+            "click",
+            function() {
 
-            // Eliminar token
-
-            localStorage.removeItem("token");
-
-
-            // Ocultar perfil
-
-            perfil.style.display = "none";
+                localStorage.removeItem(
+                    "token"
+                );
 
 
-            // Mostrar mensaje
-
-            mensaje.style.color = "black";
-
-            mensaje.textContent =
-                "Sesión cerrada.";
-
-        });
+                perfil.style.display =
+                    "none";
 
 
-        // =====================================================
-        // COMPROBAR SI YA EXISTE UNA SESIÓN
-        // =====================================================
+                mensaje.style.color =
+                    "#334155";
+
+
+                mensaje.textContent =
+                    "Sesión cerrada.";
+
+            }
+        );
+
+
+        // =========================================
+        // COMPROBAR SESIÓN EXISTENTE
+        // =========================================
 
         obtenerPerfil();
 
+
     </script>
 
+
 </body>
+
 </html>
-```
