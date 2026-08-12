@@ -6,9 +6,14 @@ const Reporte = sequelize.define("Reporte", {
   progreso: { type: DataTypes.INTEGER, allowNull: false },
   observaciones: { type: DataTypes.TEXT },
   estado: { type: DataTypes.ENUM("bueno", "regular", "atencion"), defaultValue: "regular" }
+}, {
+  tableName: "reportes"
 });
 
-Usuario.hasMany(Reporte, { foreignKey: "alumnoId" });
-Reporte.belongsTo(Usuario, { foreignKey: "alumnoId" });
+// Relaciones
+Usuario.hasMany(Reporte, { foreignKey: "alumnoId", as: "ReportesAlumno" });
+Usuario.hasMany(Reporte, { foreignKey: "terapeutaId", as: "ReportesTerapeuta" });
+Reporte.belongsTo(Usuario, { foreignKey: "alumnoId", as: "Alumno" });
+Reporte.belongsTo(Usuario, { foreignKey: "terapeutaId", as: "Terapeuta" });
 
 export default Reporte;
