@@ -23,5 +23,8 @@ const Usuario = sequelize.define(
         timestamps: true
     }
 );
+Usuario.associate = (models) => {
+  Usuario.belongsTo(models.Role, { foreignKey: 'rolId' });
+};
 
 export default Usuario;
