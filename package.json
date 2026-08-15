@@ -1,13 +1,23 @@
 {
-  "name": "sequelize",
-  "version": "1.0.0",
-  "description": "",
+  "name": "rednec-coordinacion-docente-terapeuta",
+  "version": "2.0.0",
+  "description": "Plataforma Integral de Coordinación Docente-Terapeuta-Familia en Nivel Inicial",
   "main": "app.js",
   "scripts": {
-    "dev": "node --watch app.js"
+    "start": "node app.js",
+    "dev": "node --watch app.js",
+    "react": "npm run dev --prefix frontend-react",
+    "build:react": "npm run build --prefix frontend-react"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "react",
+    "nodejs",
+    "express",
+    "sequelize",
+    "mysql",
+    "educacion-inicial"
+  ],
+  "author": "Cristian Fabian Acevedo",
   "license": "ISC",
   "type": "module",
   "dependencies": {
