@@ -1,0 +1,271 @@
+/* ==========================================================
+   RED NEC DESIGN SYSTEM & STYLES
+   ========================================================== */
+
+:root {
+  --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-fun: 'Fredoka', cursive, 'Comic Sans MS', sans-serif;
+
+  /* Colores Principales */
+  --primary-50: #f0f9ff;
+  --primary-100: #e0f2fe;
+  --primary-500: #0284c7;
+  --primary-600: #0369a1;
+  --primary-700: #075985;
+
+  /* Terapeuta (Turquesa / Teal) */
+  --terapeuta-50: #f0fdfa;
+  --terapeuta-500: #0d9488;
+  --terapeuta-600: #0f766e;
+
+  /* Familiar / Niños (Cálido y Lúdico) */
+  --fun-yellow: #fef08a;
+  --fun-orange: #fb923c;
+  --fun-purple: #c084fc;
+  --fun-pink: #f472b6;
+  --fun-green: #4ade80;
+
+  /* Estados */
+  --presente-bg: #dcfce7;
+  --presente-text: #166534;
+  --presente-border: #86efac;
+
+  --ausente-bg: #fee2e2;
+  --ausente-text: #991b1b;
+  --ausente-border: #fca5a5;
+
+  --tarde-bg: #fef3c7;
+  --tarde-text: #92400e;
+  --tarde-border: #fcd34d;
+
+  /* Superficies */
+  --bg-app: #f8fafc;
+  --card-bg: #ffffff;
+  --border-color: #e2e8f0;
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Tipografía lúdica para el rol familiar */
+.font-fun {
+  font-family: var(--font-fun) !important;
+}
+
+/* Layout */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px 20px 60px;
+}
+
+/* Botones Base */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--primary-600), var(--primary-700));
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: #f1f5f9;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+}
+
+.btn-secondary:hover {
+  background: #e2e8f0;
+}
+
+.btn-fun {
+  background: linear-gradient(135deg, #f59e0b, #ea580c);
+  color: #ffffff;
+  font-family: var(--font-fun);
+  font-size: 16px;
+  padding: 12px 22px;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(245, 158, 11, 0.35);
+}
+
+.btn-fun:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+
+/* Tarjetas */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  transition: all 0.25s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Badges & Chips */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.badge-docente {
+  background: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+}
+
+.badge-terapeuta {
+  background: #ccfbf1;
+  color: #0f766e;
+  border: 1px solid #99f6e4;
+}
+
+.badge-familiar {
+  background: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+.badge-presente {
+  background: var(--presente-bg);
+  color: var(--presente-text);
+  border: 1px solid var(--presente-border);
+}
+
+.badge-ausente {
+  background: var(--ausente-bg);
+  color: var(--ausente-text);
+  border: 1px solid var(--ausente-border);
+}
+
+.badge-tarde {
+  background: var(--tarde-bg);
+  color: var(--tarde-text);
+  border: 1px solid var(--tarde-border);
+}
+
+/* Minijuegos Flip Card 3D */
+.memory-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.memory-card {
+  aspect-ratio: 1 / 1;
+  background: #ffffff;
+  border: 3px solid #fbcfe8;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06);
+}
+
+.memory-card.hidden {
+  background: linear-gradient(135deg, #a7f3d0, #38bdf8);
+  border-color: #7dd3fc;
+}
+
+.memory-card.matched {
+  background: #fef08a;
+  border-color: #facc15;
+  transform: scale(0.95);
+  animation: pulse 0.6s ease-in-out;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(0.95); }
+}
+
+/* Grids Responsivos */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 1024px) {
+  .grid-3, .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-2, .grid-3, .grid-4 {
+    grid-template-columns: 1fr;
+  }
+  .memory-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
