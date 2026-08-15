@@ -1,11 +1,11 @@
-import Reporte from "../models/Reporte.js";
+import Reporte from "../models/reporte.js";
 
 export const obtenerReportes = async (req, res) => {
   try {
     const reportes = await Reporte.findAll();
     res.json(reportes);
   } catch (error) {
-    res.status(500).json({ mensaje: "Error al obtener reportes", error });
+    res.status(500).json({ mensaje: "Error al obtener reportes", error: error.message });
   }
 };
 
@@ -14,6 +14,6 @@ export const crearReporte = async (req, res) => {
     const nuevo = await Reporte.create(req.body);
     res.status(201).json(nuevo);
   } catch (error) {
-    res.status(500).json({ mensaje: "Error al crear reporte", error });
+    res.status(500).json({ mensaje: "Error al crear reporte", error: error.message });
   }
 };

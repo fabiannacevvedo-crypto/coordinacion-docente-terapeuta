@@ -1,5 +1,5 @@
 import express from "express";
-import Reporte from "../models/Reporte.js";
+import Reporte from "../models/reporte.js";
 
 const router = express.Router();
 
@@ -8,7 +8,7 @@ router.post("/reportes", async (req, res) => {
   try {
     const { alumnoId, terapeutaId, progreso, observaciones, estado } = req.body;
     const reporte = await Reporte.create({ alumnoId, terapeutaId, progreso, observaciones, estado });
-    res.json(reporte);
+    res.status(201).json(reporte);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

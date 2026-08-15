@@ -1,19 +1,15 @@
-// models/Role.js
-module.exports = (sequelize, DataTypes) => {
-  const Role = sequelize.define('Role', {
-    nombre: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
-    }
-  }, {
-    tableName: 'roles',
-    timestamps: false
-  });
+import { DataTypes } from "sequelize";
+import sequelize from "../config/database.js";
 
-  Role.associate = (models) => {
-    Role.hasMany(models.Usuario, { foreignKey: 'rolId' });
-  };
+const Role = sequelize.define("Role", {
+  nombre: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
+  }
+}, {
+  tableName: "roles",
+  timestamps: false
+});
 
-  return Role;
-};
+export default Role;

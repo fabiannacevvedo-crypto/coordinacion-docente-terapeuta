@@ -2,1083 +2,586 @@
 <html lang="es">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Acceso | Sistema de usuarios</title>
+    <title>Acceso | RED NEC</title>
 
     <style>
-
         /* =========================================
            CONFIGURACIÓN GENERAL
         ========================================= */
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
             min-height: 100vh;
-
             display: flex;
             justify-content: center;
             align-items: center;
-
-            padding: 30px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #e5e7eb,
-                    #f3f4f6,
-                    #dbe1e8
-                );
+            padding: 20px;
+            background: linear-gradient(135deg, #e5e7eb, #f3f4f6, #dbeafe);
         }
-
 
         /* =========================================
            CONTENEDOR PRINCIPAL
         ========================================= */
-
         .contenedor {
-
             width: 100%;
             max-width: 950px;
-
             background: #ffffff;
-
-            border-radius: 24px;
-
+            border-radius: 20px;
             overflow: hidden;
-
-            box-shadow:
-                0 20px 50px rgba(0, 0, 0, 0.18);
-
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
             display: grid;
-
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1.1fr;
         }
-
 
         /* =========================================
            PANEL IZQUIERDO
         ========================================= */
-
         .presentacion {
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #1f2937,
-                    #374151,
-                    #4b5563
-                );
-
+            background: linear-gradient(145deg, #0f172a, #1e293b, #0e7490);
             color: white;
-
-            padding: 50px 40px;
-
+            padding: 45px 35px;
             display: flex;
-
             flex-direction: column;
-
-            justify-content: center;
-
+            justify-content: space-between;
             position: relative;
-
-            box-shadow:
-                0 0 15px rgba(0, 180, 216, 0.25),
-                0 0 25px rgba(0, 180, 216, 0.12);
+            overflow: hidden;
         }
-
-
-        /* Círculo decorativo superior */
-
-        .presentacion::before {
-
-            content: "";
-
-            position: absolute;
-
-            width: 220px;
-            height: 220px;
-
-            border-radius: 50%;
-
-            background:
-                rgba(255, 255, 255, 0.04);
-
-            top: -80px;
-            right: -80px;
-        }
-
-
-        /* Círculo decorativo inferior */
-
-        .presentacion::after {
-
-            content: "";
-
-            position: absolute;
-
-            width: 180px;
-            height: 180px;
-
-            border-radius: 50%;
-
-            background:
-                rgba(0, 180, 216, 0.08);
-
-            bottom: -70px;
-            left: -70px;
-        }
-
-
-        /* =========================================
-           TEXTO DEL PANEL
-        ========================================= */
 
         .presentacion h1 {
-
-            font-size: 38px;
-
-            margin-bottom: 20px;
-
-            position: relative;
-
-            z-index: 1;
-
-            color: #f8fafc;
+            font-size: 32px;
+            margin-bottom: 12px;
+            font-weight: 700;
         }
-
 
         .presentacion p {
-
-            font-size: 17px;
-
-            line-height: 1.7;
-
-            color: #d1d5db;
-
-            position: relative;
-
-            z-index: 1;
+            font-size: 15px;
+            line-height: 1.6;
+            color: #cbd5e1;
         }
-
 
         .icono {
-
-            font-size: 60px;
-
-            margin-bottom: 20px;
-
-            position: relative;
-
-            z-index: 1;
-
-            filter:
-                drop-shadow(
-                    0 0 8px rgba(0, 180, 216, 0.5)
-                );
+            font-size: 48px;
+            margin-bottom: 15px;
         }
 
+        .enlace-inicio {
+            display: inline-block;
+            margin-top: 25px;
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: color 0.2s ease;
+        }
+
+        .enlace-inicio:hover {
+            color: #7dd3fc;
+            text-decoration: underline;
+        }
 
         /* =========================================
-           PANEL DERECHO
+           PANEL DERECHO (FORMULARIOS)
         ========================================= */
-
         .formularios {
-
             padding: 40px;
-
             background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
-
-        .formularios h2 {
-
-            color: #1f2937;
-
-            margin-bottom: 20px;
-
-            font-size: 24px;
+        /* Pestañas para alternar Login / Registro */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
         }
 
+        .tab-btn {
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: #64748b;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: none;
+            width: auto;
+        }
 
-        /* =========================================
-           FORMULARIOS
-        ========================================= */
+        .tab-btn.activo {
+            color: #0284c7;
+            background: #e0f2fe;
+        }
 
         form {
-
             display: flex;
-
             flex-direction: column;
-
             gap: 14px;
-
-            margin-bottom: 25px;
         }
 
+        .form-seccion {
+            display: none;
+        }
+
+        .form-seccion.activo {
+            display: block;
+        }
 
         /* =========================================
            GRUPOS DE INPUT
         ========================================= */
-
         .grupo-input {
-
             position: relative;
         }
 
-
         .grupo-input span {
-
             position: absolute;
-
             left: 14px;
-
             top: 50%;
-
             transform: translateY(-50%);
-
             color: #64748b;
-
-            font-size: 18px;
-
+            font-size: 16px;
             z-index: 2;
         }
 
-
-        /* =========================================
-           INPUTS
-        ========================================= */
-
-        input {
-
+        input, select {
             width: 100%;
-
-            padding: 13px 15px 13px 45px;
-
-            border: 1px solid #d1d5db;
-
+            padding: 12px 15px 12px 42px;
+            border: 1px solid #cbd5e1;
             border-radius: 10px;
-
-            font-size: 15px;
-
+            font-size: 14px;
             outline: none;
-
             transition: all 0.3s ease;
-
-            background: #f9fafb;
+            background: #f8fafc;
+            color: #1e293b;
         }
 
-
-        input:hover {
-
-            border-color: #9ca3af;
-        }
-
-
-        input:focus {
-
-            border-color: #00b4d8;
-
+        input:focus, select:focus {
+            border-color: #0284c7;
             background: white;
-
-            box-shadow:
-                0 0 10px rgba(0, 180, 216, 0.35),
-                0 0 18px rgba(0, 180, 216, 0.15);
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
         }
-
 
         /* =========================================
            BOTONES
         ========================================= */
-
-        button {
-
+        .btn-principal {
             width: 100%;
-
             padding: 13px;
-
             border: none;
-
             border-radius: 10px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #374151,
-                    #1f2937
-                );
-
+            background: linear-gradient(135deg, #0284c7, #0369a1);
             color: white;
-
-            font-size: 16px;
-
-            font-weight: bold;
-
+            font-size: 15px;
+            font-weight: 600;
             cursor: pointer;
-
             transition: all 0.3s ease;
-
-            box-shadow:
-                0 5px 15px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+            margin-top: 5px;
         }
 
-
-        button:hover {
-
-            transform: translateY(-2px);
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #4b5563,
-                    #374151
-                );
-
-            box-shadow:
-                0 0 12px rgba(0, 180, 216, 0.5),
-                0 0 22px rgba(0, 180, 216, 0.2);
+        .btn-principal:hover {
+            background: linear-gradient(135deg, #0369a1, #075985);
+            transform: translateY(-1px);
         }
 
-
-        button:active {
-
+        .btn-principal:active {
             transform: translateY(0);
         }
 
-
         /* =========================================
-           SEPARADOR
+           MENSAJES DE ALERTA
         ========================================= */
-
-        .separador {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 12px;
-
-            margin: 25px 0;
-
-            color: #9ca3af;
-
-            font-size: 13px;
-        }
-
-
-        .separador::before,
-        .separador::after {
-
-            content: "";
-
-            height: 1px;
-
-            background: #e5e7eb;
-
-            flex: 1;
-        }
-
-
-        /* =========================================
-           MENSAJES
-        ========================================= */
-
         #mensaje {
-
             margin-top: 15px;
-
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
             text-align: center;
-
-            font-weight: bold;
-
-            min-height: 22px;
-
-            line-height: 1.5;
+            font-weight: 500;
+            display: none;
         }
 
+        .msg-exito {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+            display: block !important;
+        }
+
+        .msg-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+            display: block !important;
+        }
 
         /* =========================================
-           PERFIL
+           PANEL DE PERFIL (SESIÓN ACTIVA)
         ========================================= */
-
         #perfil {
-
             display: none;
-
-            margin-top: 25px;
-
-            padding: 20px;
-
-            background: #f1f5f9;
-
-            border: 1px solid #cbd5e1;
-
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
             border-radius: 12px;
-
-            box-shadow:
-                0 0 12px rgba(0, 180, 216, 0.12);
+            padding: 20px;
+            margin-top: 15px;
         }
-
 
         #perfil h2 {
-
-            color: #374151;
-
+            font-size: 18px;
+            color: #166534;
             margin-bottom: 10px;
         }
 
-
         #datosPerfil {
-
-            color: #475569;
-
+            font-size: 14px;
+            color: #374151;
             line-height: 1.8;
+            margin-bottom: 15px;
         }
 
-
-        /* =========================================
-           BOTÓN CERRAR SESIÓN
-        ========================================= */
-
-        #logout {
-
-            margin-top: 15px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #ef4444,
-                    #dc2626
-                );
+        .acciones-perfil {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
-
-        #logout:hover {
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #f87171,
-                    #dc2626
-                );
-
-            box-shadow:
-                0 0 12px rgba(239, 68, 68, 0.4);
+        .btn-accion {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
         }
 
+        .btn-dashboard {
+            background: #0284c7;
+            color: white;
+        }
 
-        /* =========================================
-           RESPONSIVE
-        ========================================= */
+        .btn-logout {
+            background: #ef4444;
+            color: white;
+        }
 
-        @media (max-width: 750px) {
-
-            body {
-
-                padding: 15px;
-            }
-
-
+        @media (max-width: 768px) {
             .contenedor {
-
                 grid-template-columns: 1fr;
-
-                max-width: 500px;
+                max-width: 480px;
             }
-
-
             .presentacion {
-
-                padding: 35px 30px;
-
-                text-align: center;
+                padding: 30px 20px;
             }
-
-
-            .presentacion h1 {
-
-                font-size: 30px;
-            }
-
-
-            .presentacion p {
-
-                font-size: 15px;
-            }
-
-
-            .icono {
-
-                font-size: 45px;
-            }
-
-
             .formularios {
-
-                padding: 30px 25px;
+                padding: 25px 20px;
             }
-
         }
-
     </style>
-
 </head>
-
 
 <body>
 
-
-    <!-- =========================================
-         CONTENEDOR PRINCIPAL
-    ========================================== -->
-
     <div class="contenedor">
 
-
-        <!-- =====================================
-             PRESENTACIÓN
-        ====================================== -->
-
+        <!-- PANEL IZQUIERDO -->
         <div class="presentacion">
-
-            <div class="icono">
-                👤
+            <div>
+                <div class="icono">🤝</div>
+                <h1>RED NEC</h1>
+                <p>Coordinación integral entre docentes, terapeutas y familias para el seguimiento pedagógico y terapéutico.</p>
             </div>
-
-
-            <h1>
-                Bienvenido
-            </h1>
-
-
-            <p>
-                Accedé a tu cuenta o registrate para
-                comenzar a utilizar nuestro sistema.
-            </p>
-
+            <div>
+                <a href="../pages/index.html" class="enlace-inicio">← Volver al sitio principal</a>
+            </div>
         </div>
 
-
-        <!-- =====================================
-             FORMULARIOS
-        ====================================== -->
-
+        <!-- PANEL DERECHO -->
         <div class="formularios">
 
-
-            <!-- =================================
-                 REGISTRO
-            ================================== -->
-
-            <h2>
-                Crear una cuenta
-            </h2>
-
-
-            <form id="registroForm">
-
-
-                <!-- NOMBRE -->
-
-                <div class="grupo-input">
-
-                    <span>👤</span>
-
-                    <input
-                        type="text"
-                        id="nombre"
-                        placeholder="Nombre"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- EMAIL -->
-
-                <div class="grupo-input">
-
-                    <span>✉️</span>
-
-                    <input
-                        type="email"
-                        id="emailRegistro"
-                        placeholder="Correo electrónico"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- CONTRASEÑA -->
-
-                <div class="grupo-input">
-
-                    <span>🔒</span>
-
-                    <input
-                        type="password"
-                        id="passwordRegistro"
-                        placeholder="Contraseña"
-                        required
-                    >
-
-                </div>
-
-
-                <button type="submit">
-                    Registrarse
-                </button>
-
-
-            </form>
-
-
-            <!-- =================================
-                 SEPARADOR
-            ================================== -->
-
-            <div class="separador">
-                O
+            <!-- Pestañas -->
+            <div class="tabs" id="tabsContenedor">
+                <button type="button" class="tab-btn activo" id="tabLoginBtn" onclick="cambiarTab('login')">Iniciar Sesión</button>
+                <button type="button" class="tab-btn" id="tabRegistroBtn" onclick="cambiarTab('registro')">Crear Cuenta</button>
             </div>
 
+            <!-- FORMULARIO LOGIN -->
+            <div class="form-seccion activo" id="seccionLogin">
+                <form id="loginForm">
+                    <div class="grupo-input">
+                        <span>✉️</span>
+                        <input type="email" id="emailLogin" placeholder="Correo electrónico" required autocomplete="email">
+                    </div>
+                    <div class="grupo-input">
+                        <span>🔒</span>
+                        <input type="password" id="passwordLogin" placeholder="Contraseña" required autocomplete="current-password">
+                    </div>
+                    <button type="submit" class="btn-principal" id="btnLogin">Ingresar</button>
+                </form>
+            </div>
 
-            <!-- =================================
-                 LOGIN
-            ================================== -->
+            <!-- FORMULARIO REGISTRO -->
+            <div class="form-seccion" id="seccionRegistro">
+                <form id="registroForm">
+                    <div class="grupo-input">
+                        <span>👤</span>
+                        <input type="text" id="nombre" placeholder="Nombre completo" required>
+                    </div>
+                    <div class="grupo-input">
+                        <span>✉️</span>
+                        <input type="email" id="emailRegistro" placeholder="Correo electrónico" required autocomplete="email">
+                    </div>
+                    <div class="grupo-input">
+                        <span>🔒</span>
+                        <input type="password" id="passwordRegistro" placeholder="Contraseña (mínimo 6 caracteres)" required minlength="6" autocomplete="new-password">
+                    </div>
+                    <div class="grupo-input">
+                        <span>🏷️</span>
+                        <select id="rolRegistro" onchange="alternarMatricula(this.value)" required>
+                            <option value="docente">Docente</option>
+                            <option value="terapeuta">Terapeuta</option>
+                            <option value="familiar" selected>Familiar / Tutor</option>
+                        </select>
+                    </div>
+                    <div class="grupo-input" id="grupoMatricula" style="display: none;">
+                        <span>📋</span>
+                        <input type="text" id="matriculaRegistro" placeholder="N° de Matrícula Profesional">
+                    </div>
+                    <button type="submit" class="btn-principal" id="btnRegistro">Registrarse</button>
+                </form>
+            </div>
 
-            <h2>
-                Iniciar sesión
-            </h2>
-
-
-            <form id="loginForm">
-
-
-                <!-- EMAIL -->
-
-                <div class="grupo-input">
-
-                    <span>✉️</span>
-
-                    <input
-                        type="email"
-                        id="emailLogin"
-                        placeholder="Correo electrónico"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- CONTRASEÑA -->
-
-                <div class="grupo-input">
-
-                    <span>🔒</span>
-
-                    <input
-                        type="password"
-                        id="passwordLogin"
-                        placeholder="Contraseña"
-                        required
-                    >
-
-                </div>
-
-
-                <button type="submit">
-                    Iniciar sesión
-                </button>
-
-
-            </form>
-
-
-            <!-- =================================
-                 MENSAJES
-            ================================== -->
-
+            <!-- MENSAJES -->
             <div id="mensaje"></div>
 
-
-            <!-- =================================
-                 PERFIL
-            ================================== -->
-
+            <!-- PERFIL CON SESIÓN ACTIVA -->
             <div id="perfil">
-
-                <h2>
-                    Perfil
-                </h2>
-
-
-                <p id="datosPerfil"></p>
-
-
-                <button id="logout">
-                    Cerrar sesión
-                </button>
-
+                <h2>✅ Sesión Activa</h2>
+                <div id="datosPerfil"></div>
+                <div class="acciones-perfil">
+                    <a href="../pages/seguimiento.html" class="btn-accion btn-dashboard">Panel de Seguimiento</a>
+                    <button id="logout" class="btn-accion btn-logout">Cerrar Sesión</button>
+                </div>
             </div>
-
 
         </div>
 
     </div>
 
-
-    <!-- =========================================
-         JAVASCRIPT
-    ========================================== -->
-
     <script>
-
-
         // =========================================
-        // URL BASE DEL BACKEND
+        // CONFIGURACIÓN API
         // =========================================
+        const API = "http://localhost:3001/api";
 
-        const API = "http://localhost:3001";
+        // Elementos DOM
+        const tabLoginBtn = document.getElementById("tabLoginBtn");
+        const tabRegistroBtn = document.getElementById("tabRegistroBtn");
+        const seccionLogin = document.getElementById("seccionLogin");
+        const seccionRegistro = document.getElementById("seccionRegistro");
+        const tabsContenedor = document.getElementById("tabsContenedor");
 
+        const loginForm = document.getElementById("loginForm");
+        const registroForm = document.getElementById("registroForm");
+        const mensaje = document.getElementById("mensaje");
+        const perfil = document.getElementById("perfil");
+        const datosPerfil = document.getElementById("datosPerfil");
+        const logoutBtn = document.getElementById("logout");
 
-        // =========================================
-        // ELEMENTOS DEL HTML
-        // =========================================
+        // Cambiar entre pestañas Login y Registro
+        function cambiarTab(tipo) {
+            mensaje.className = "";
+            mensaje.style.display = "none";
 
-        const registroForm =
-            document.getElementById("registroForm");
-
-
-        const loginForm =
-            document.getElementById("loginForm");
-
-
-        const mensaje =
-            document.getElementById("mensaje");
-
-
-        const perfil =
-            document.getElementById("perfil");
-
-
-        const datosPerfil =
-            document.getElementById("datosPerfil");
-
-
-        const logout =
-            document.getElementById("logout");
-
-
-        // =========================================
-        // REGISTRO
-        // =========================================
-
-        registroForm.addEventListener(
-            "submit",
-            async function(event) {
-
-                event.preventDefault();
-
-
-                const nombre =
-                    document.getElementById(
-                        "nombre"
-                    ).value;
-
-
-                const email =
-                    document.getElementById(
-                        "emailRegistro"
-                    ).value;
-
-
-                const password =
-                    document.getElementById(
-                        "passwordRegistro"
-                    ).value;
-
-
-                try {
-
-                    const respuesta =
-                        await fetch(
-                            `${API}/auth/register`,
-                            {
-
-                                method: "POST",
-
-                                headers: {
-                                    "Content-Type":
-                                        "application/json"
-                                },
-
-                                body: JSON.stringify({
-                                    nombre,
-                                    email,
-                                    password
-                                })
-
-                            }
-                        );
-
-
-                    const datos =
-                        await respuesta.json();
-
-
-                    if (respuesta.ok) {
-
-                        mensaje.style.color =
-                            "#16a34a";
-
-                        mensaje.textContent =
-                            datos.msg;
-
-                        registroForm.reset();
-
-                    } else {
-
-                        mensaje.style.color =
-                            "#dc2626";
-
-                        mensaje.textContent =
-                            datos.msg;
-                    }
-
-
-                } catch (error) {
-
-                    mensaje.style.color =
-                        "#dc2626";
-
-                    mensaje.textContent =
-                        "No se pudo conectar con el servidor.";
-
-                    console.error(error);
-                }
-
+            if (tipo === "login") {
+                tabLoginBtn.classList.add("activo");
+                tabRegistroBtn.classList.remove("activo");
+                seccionLogin.classList.add("activo");
+                seccionRegistro.classList.remove("activo");
+            } else {
+                tabRegistroBtn.classList.add("activo");
+                tabLoginBtn.classList.remove("activo");
+                seccionRegistro.classList.add("activo");
+                seccionLogin.classList.remove("activo");
             }
-        );
-
-
-        // =========================================
-        // LOGIN
-        // =========================================
-
-        loginForm.addEventListener(
-            "submit",
-            async function(event) {
-
-                event.preventDefault();
-
-
-                const email =
-                    document.getElementById(
-                        "emailLogin"
-                    ).value;
-
-
-                const password =
-                    document.getElementById(
-                        "passwordLogin"
-                    ).value;
-
-
-                try {
-
-                    const respuesta =
-                        await fetch(
-                            `${API}/auth/login`,
-                            {
-
-                                method: "POST",
-
-                                headers: {
-                                    "Content-Type":
-                                        "application/json"
-                                },
-
-                                body: JSON.stringify({
-                                    email,
-                                    password
-                                })
-
-                            }
-                        );
-
-
-                    const datos =
-                        await respuesta.json();
-
-
-                    if (respuesta.ok) {
-
-                        mensaje.style.color =
-                            "#16a34a";
-
-                        mensaje.textContent =
-                            datos.msg;
-
-
-                        // Guardar token
-
-                        localStorage.setItem(
-                            "token",
-                            datos.token
-                        );
-
-
-                        loginForm.reset();
-
-
-                        obtenerPerfil();
-
-
-                    } else {
-
-                        mensaje.style.color =
-                            "#dc2626";
-
-                        mensaje.textContent =
-                            datos.msg;
-                    }
-
-
-                } catch (error) {
-
-                    mensaje.style.color =
-                        "#dc2626";
-
-                    mensaje.textContent =
-                        "No se pudo conectar con el servidor.";
-
-                    console.error(error);
-                }
-
-            }
-        );
-
-
-        // =========================================
-        // OBTENER PERFIL
-        // =========================================
-
-        async function obtenerPerfil() {
-
-            const token =
-                localStorage.getItem("token");
-
-
-            if (!token) {
-
-                return;
-
-            }
-
-
-            try {
-
-                const respuesta =
-                    await fetch(
-                        `${API}/perfil`,
-                        {
-
-                            method: "GET",
-
-                            headers: {
-
-                                "Authorization":
-                                    `Bearer ${token}`
-
-                            }
-
-                        }
-                    );
-
-
-                const datos =
-                    await respuesta.json();
-
-
-                if (respuesta.ok) {
-
-                    perfil.style.display =
-                        "block";
-
-
-                    datosPerfil.innerHTML = `
-                        ID: ${datos.usuario.id}<br>
-                        Email: ${datos.usuario.email}
-                    `;
-
-
-                } else {
-
-                    localStorage.removeItem(
-                        "token"
-                    );
-
-                    perfil.style.display =
-                        "none";
-
-                }
-
-
-            } catch (error) {
-
-                console.error(error);
-
-            }
-
         }
 
-
-        // =========================================
-        // CERRAR SESIÓN
-        // =========================================
-
-        logout.addEventListener(
-            "click",
-            function() {
-
-                localStorage.removeItem(
-                    "token"
-                );
-
-
-                perfil.style.display =
-                    "none";
-
-
-                mensaje.style.color =
-                    "#334155";
-
-
-                mensaje.textContent =
-                    "Sesión cerrada.";
-
+        // Mostrar u ocultar campo matrícula según rol
+        function alternarMatricula(rol) {
+            const grupoMatricula = document.getElementById("grupoMatricula");
+            const inputMatricula = document.getElementById("matriculaRegistro");
+            if (rol === "terapeuta") {
+                grupoMatricula.style.display = "block";
+                inputMatricula.required = true;
+            } else {
+                grupoMatricula.style.display = "none";
+                inputMatricula.required = false;
+                inputMatricula.value = "";
             }
-        );
+        }
 
+        // Mostrar mensajes de alerta
+        function mostrarMensaje(texto, tipo) {
+            mensaje.textContent = texto;
+            mensaje.className = tipo === "exito" ? "msg-exito" : "msg-error";
+            mensaje.style.display = "block";
+        }
 
         // =========================================
-        // COMPROBAR SESIÓN EXISTENTE
+        // 1. REGISTRO
         // =========================================
+        registroForm.addEventListener("submit", async function(e) {
+            e.preventDefault();
 
-        obtenerPerfil();
+            const nombre = document.getElementById("nombre").value.trim();
+            const email = document.getElementById("emailRegistro").value.trim();
+            const password = document.getElementById("passwordRegistro").value;
+            const rol = document.getElementById("rolRegistro").value;
+            const matricula = document.getElementById("matriculaRegistro").value.trim();
 
+            mostrarMensaje("Registrando...", "exito");
 
+            try {
+                const res = await fetch(`${API}/auth/register`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ nombre, email, password, rol, matricula })
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    mostrarMensaje(data.msg || "¡Registro exitoso! Ya puedes iniciar sesión.", "exito");
+                    registroForm.reset();
+                    setTimeout(() => cambiarTab("login"), 1200);
+                } else {
+                    mostrarMensaje(data.msg || "Error al registrarse.", "error");
+                }
+            } catch (err) {
+                console.error("Error de red:", err);
+                mostrarMensaje("No se pudo conectar con el servidor (verifica que el backend esté encendido en http://localhost:3001).", "error");
+            }
+        });
+
+        // =========================================
+        // 2. LOGIN
+        // =========================================
+        loginForm.addEventListener("submit", async function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById("emailLogin").value.trim();
+            const password = document.getElementById("passwordLogin").value;
+
+            mostrarMensaje("Iniciando sesión...", "exito");
+
+            try {
+                const res = await fetch(`${API}/auth/login`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    mostrarMensaje(data.msg || "¡Login exitoso!", "exito");
+
+                    // Guardar token y usuario en localStorage
+                    localStorage.setItem("token", data.token);
+                    if (data.usuario) {
+                        localStorage.setItem("usuario", JSON.stringify(data.usuario));
+                    }
+
+                    loginForm.reset();
+                    verificarSesion();
+                } else {
+                    mostrarMensaje(data.msg || "Credenciales incorrectas.", "error");
+                }
+            } catch (err) {
+                console.error("Error de red:", err);
+                mostrarMensaje("No se pudo conectar con el servidor.", "error");
+            }
+        });
+
+        // =========================================
+        // 3. VERIFICAR SESIÓN (PERFIL)
+        // =========================================
+        async function verificarSesion() {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                perfil.style.display = "none";
+                tabsContenedor.style.display = "flex";
+                seccionLogin.style.display = "block";
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API}/perfil`, {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
+
+                const data = await res.json();
+
+                if (res.ok && data.usuario) {
+                    // Ocultar formularios y mostrar tarjeta de perfil
+                    tabsContenedor.style.display = "none";
+                    seccionLogin.style.display = "none";
+                    seccionRegistro.style.display = "none";
+                    perfil.style.display = "block";
+
+                    const u = data.usuario;
+                    datosPerfil.innerHTML = `
+                        <strong>Nombre:</strong> ${u.nombre || 'Usuario'}<br>
+                        <strong>Email:</strong> ${u.email}<br>
+                        <strong>Rol:</strong> <span style="text-transform: capitalize;">${u.rol || 'Familiar'}</span>
+                    `;
+                } else {
+                    // Token expirado o inválido
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("usuario");
+                    perfil.style.display = "none";
+                    tabsContenedor.style.display = "flex";
+                    seccionLogin.style.display = "block";
+                }
+            } catch (err) {
+                console.error("Error verificando sesión:", err);
+            }
+        }
+
+        // =========================================
+        // 4. CERRAR SESIÓN
+        // =========================================
+        logoutBtn.addEventListener("click", () => {
+            localStorage.removeItem("token");
+            localStorage.removeItem("usuario");
+            perfil.style.display = "none";
+            tabsContenedor.style.display = "flex";
+            cambiarTab("login");
+            mostrarMensaje("Has cerrado sesión.", "exito");
+        });
+
+        // Comprobar si ya hay una sesión activa al cargar
+        verificarSesion();
     </script>
-
 
 </body>
 

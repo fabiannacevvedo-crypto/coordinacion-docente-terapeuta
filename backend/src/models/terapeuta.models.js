@@ -1,16 +1,17 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../config/data.base.js";
+import sequelize from "../config/database.js";
 
-const terapeuta = sequelize.define("terapeuta", {
+const Terapeuta = sequelize.define("terapeuta", {
   name: { type: DataTypes.STRING, allowNull: false },
   apellido: { type: DataTypes.STRING, allowNull: true },
   email: { type: DataTypes.STRING, allowNull: true },
-  fecha_nacimiento: { type: DataTypes.DATEONLY, allowNull: false },
+  fecha_nacimiento: { type: DataTypes.DATEONLY, allowNull: true },
   edad: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
-  cargo: { type: DataTypes.STRING, allowNull: true }
+  cargo: { type: DataTypes.STRING, allowNull: true },
+  matricula: { type: DataTypes.STRING, allowNull: true }
 }, {
   tableName: "terapeuta",
   timestamps: true
 });
 
-export default terapeuta;
+export default Terapeuta;

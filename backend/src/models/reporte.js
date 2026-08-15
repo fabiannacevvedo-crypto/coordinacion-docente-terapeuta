@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/database.js";
-import Usuario from "./Usuario.js";
+import Usuario from "./usuario.js";
 
 const Reporte = sequelize.define("Reporte", {
   progreso: { type: DataTypes.INTEGER, allowNull: false },

@@ -71,26 +71,34 @@ document.addEventListener("DOMContentLoaded", () => {
       };
 
       try {
-        const respuesta = await fetch('/api/usuarios/registro', {
+        const respuesta = await fetch('http://localhost:3001/api/auth/register', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(datosUsuario)
+          body: JSON.stringify({
+            rol: datosUsuario.rol,
+            nombre: datosUsuario.nombre,
+            email: datosUsuario.email,
+            password: datosUsuario.contrasena,
+            matricula: datosUsuario.matricula
+          })
         });
 
         const resultado = await respuesta.json();
 
         if (respuesta.ok) {
-          mostrarAlertaBootstrap("Ya podés iniciar sesión.", "success");
+          mostrarAlertaBootstrap(resultado.msg || "¡Registro exitoso! Ya podés iniciar sesión.", "success");
           formRegister.reset();
           
           // Cerrar modal automáticamente
           const modalRegistroEl = document.getElementById('modal-register');
-          const modalBootstrap = bootstrap.Modal.getInstance(modalRegistroEl);
-          if (modalBootstrap) {
-            setTimeout(() => modalBootstrap.hide(), 1500);
+          if (modalRegistroEl && typeof bootstrap !== 'undefined') {
+            const modalBootstrap = bootstrap.Modal.getInstance(modalRegistroEl);
+            if (modalBootstrap) {
+              setTimeout(() => modalBootstrap.hide(), 1500);
+            }
           }
         } else {
-          mostrarAlertaBootstrap(`Error: ${resultado.mensaje || 'No se pudo registrar.'}`, "danger");
+          mostrarAlertaBootstrap(`Error: ${resultado.msg || resultado.mensaje || 'No se pudo registrar.'}`, "danger");
         }
 
       } catch (error) {
