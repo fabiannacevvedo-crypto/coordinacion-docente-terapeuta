@@ -1,21 +1,22 @@
 {
-  "name": "sequelize",
+  "name": "rednec-coordinacion-docente-terapeuta",
   "version": "1.0.0",
-  "description": "",
+  "description": "Plataforma de coordinacion interdisciplinaria entre docentes, terapeutas y familias (RED NEC).",
   "main": "app.js",
-  "scripts": {
-    "dev": "node --watch app.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "type": "module",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node --watch app.js",
+    "seed": "node backend/src/config/seed.js",
+    "test": "node --test tests/api.test.js"
+  },
   "dependencies": {
     "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.13.0",
     "mysql2": "^3.22.5",
     "sequelize": "^6.37.8"
   }

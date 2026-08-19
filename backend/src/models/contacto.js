@@ -1,8 +1,8 @@
 ﻿import { DataTypes } from "sequelize";
 import sequelize from "../config/database.js";
 
-const Usuario = sequelize.define(
-  "Usuario",
+const Contacto = sequelize.define(
+  "Contacto",
   {
     id: {
       type: DataTypes.INTEGER,
@@ -16,34 +16,24 @@ const Usuario = sequelize.define(
     email: {
       type: DataTypes.STRING(100),
       allowNull: false,
-      unique: true,
-    },
-    password_hash: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-    },
-    rol: {
-      type: DataTypes.STRING(50),
-      allowNull: false,
-      defaultValue: "familiar",
-    },
-    matricula: {
-      type: DataTypes.STRING(50),
-      allowNull: true,
     },
     telefono: {
       type: DataTypes.STRING(50),
       allowNull: true,
     },
-    activo: {
+    mensaje: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    leido: {
       type: DataTypes.BOOLEAN,
-      defaultValue: true,
+      defaultValue: false,
     }
   },
   {
-    tableName: "usuarios",
+    tableName: "contactos",
     timestamps: true,
   }
 );
 
-export default Usuario;
+export default Contacto;
