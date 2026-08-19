@@ -14,7 +14,8 @@ export async function listarSalas(req, res) {
       where,
       include: [
         { model: Jardin, as: "Jardin", attributes: ["id", "nombre", "cantidad_aulas"] },
-        { model: Usuario, as: "DocenteTitular", attributes: ["id", "nombre", "email"] },
+        { model: Usuario, as: "DocenteTitular", attributes: ["id", "nombre", "email", "matricula"] },
+        { model: Usuario, as: "TerapeutaAsignado", attributes: ["id", "nombre", "email", "matricula"] },
         { model: Alumno, as: "Alumnos", attributes: ["id", "nombre", "apellido", "diagnostico"] }
       ],
       order: [["nombre", "ASC"]]
@@ -27,13 +28,14 @@ export async function listarSalas(req, res) {
 
 export async function crearSala(req, res) {
   try {
-    const { nombre, edad_grupo, color, turno, capacidad, jardin_id, docente_titular_id } = req.body;
+    const { nombre, edad_grupo, color, turno, capacidad, jardin_id, docente_titular_id, terapeuta_asignado_id } = req.body;
 
     if (!nombre) {
       return res.status(400).json({ msg: "El nombre de la sala es obligatorio." });
     }
 
-    const docenteId = docente_titular_id || (req.usuario ? req.usuario.id : null);
+    const docenteId = docente_titular_id || (req.usuario?.rol === "docente" ? req.usuario.id : 1);
+    const terapeutaId = terapeuta_asignado_id ? Number(terapeuta_asignado_id) : 2;
 
     const sala = await Sala.create({
       nombre: nombre.trim(),
@@ -42,7 +44,8 @@ export async function crearSala(req, res) {
       turno: turno || "mañana",
       capacidad: Number(capacidad) || 20,
       jardin_id: jardin_id ? Number(jardin_id) : null,
-      docente_titular_id: docenteId
+      docente_titular_id: docenteId,
+      terapeuta_asignado_id: terapeutaId
     });
 
     if (docenteId) {
@@ -56,6 +59,7 @@ export async function crearSala(req, res) {
       include: [
         { model: Jardin, as: "Jardin" },
         { model: Usuario, as: "DocenteTitular" },
+        { model: Usuario, as: "TerapeutaAsignado" },
         { model: Alumno, as: "Alumnos" }
       ]
     });
@@ -73,6 +77,7 @@ export async function misSalasDocente(req, res) {
       where: { docente_titular_id: docenteId },
       include: [
         { model: Jardin, as: "Jardin" },
+        { model: Usuario, as: "TerapeutaAsignado" },
         { model: Alumno, as: "Alumnos" }
       ]
     });

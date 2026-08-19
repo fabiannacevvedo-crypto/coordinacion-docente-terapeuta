@@ -38,6 +38,10 @@ const Sala = sequelize.define(
     docente_titular_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
+    },
+    terapeuta_asignado_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     }
   },
   {
@@ -50,7 +54,10 @@ const Sala = sequelize.define(
 Jardin.hasMany(Sala, { foreignKey: "jardin_id", as: "Salas" });
 Sala.belongsTo(Jardin, { foreignKey: "jardin_id", as: "Jardin" });
 
-Usuario.hasMany(Sala, { foreignKey: "docente_titular_id", as: "SalasTitular" });
+Usuario.hasMany(Sala, { foreignKey: "docente_titular_id", as: "SalasDocente" });
 Sala.belongsTo(Usuario, { foreignKey: "docente_titular_id", as: "DocenteTitular" });
+
+Usuario.hasMany(Sala, { foreignKey: "terapeuta_asignado_id", as: "SalasTerapeuta" });
+Sala.belongsTo(Usuario, { foreignKey: "terapeuta_asignado_id", as: "TerapeutaAsignado" });
 
 export default Sala;

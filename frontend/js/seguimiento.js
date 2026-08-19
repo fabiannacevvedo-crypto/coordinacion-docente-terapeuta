@@ -1,5 +1,5 @@
 ﻿/**
- * RED NEC - Gestión de Salas, Asistencia, Tareas y Reportes
+ * RED NEC - Gestión de Salas, Asistencia, Tareas y Reportes Interdisciplinarios
  */
 
 let todasLasSalas = [];
@@ -7,6 +7,7 @@ let todosLosJardines = [];
 let todosLosAlumnos = [];
 let todasLasTareas = [];
 let todosLosReportes = [];
+let todosLosTerapeutas = [];
 let salaSeleccionadaId = null;
 
 let chartEstadosInstancia = null;
@@ -15,6 +16,7 @@ let chartProgresoInstancia = null;
 document.addEventListener("DOMContentLoaded", async () => {
   await Promise.all([
     cargarJardines(),
+    cargarTerapeutas(),
     cargarSalas(),
     cargarAlumnos(),
     cargarTareas(),
@@ -25,7 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 // ==========================================
-// 1. CARGAR JARDINES
+// 1. CARGAR JARDINES & TERAPEUTAS
 // ==========================================
 async function cargarJardines() {
   try {
@@ -43,8 +45,27 @@ async function cargarJardines() {
   }
 }
 
+async function cargarTerapeutas() {
+  try {
+    const res = await fetch("/api/terapeutas");
+    todosLosTerapeutas = await res.json();
+
+    const selTeraSala = document.getElementById("salaTerapeutaId");
+    const selTeraTarea = document.getElementById("tareaTerapeutaId");
+
+    const opciones = todosLosTerapeutas.map(t => `
+      <option value="${t.id}">${t.nombre} (${t.matricula ? 'Mat. ' + t.matricula : 'Terapeuta'})</option>
+    `).join("");
+
+    if (selTeraSala && opciones) selTeraSala.innerHTML = opciones;
+    if (selTeraTarea && opciones) selTeraTarea.innerHTML = opciones;
+  } catch (e) {
+    console.error("Error al cargar terapeutas:", e);
+  }
+}
+
 // ==========================================
-// 2. CARGAR SALAS Y RENDERIZAR BADGES
+// 2. CARGAR SALAS Y RENDERIZAR BADGES CO-GESTIONADAS
 // ==========================================
 async function cargarSalas() {
   try {
@@ -75,18 +96,27 @@ async function cargarSalas() {
     contenedorSalas.innerHTML = todasLasSalas.map(s => {
       const esActiva = s.id === salaSeleccionadaId;
       const countAlumnos = s.Alumnos ? s.Alumnos.length : 0;
+      const nombreDocente = s.DocenteTitular?.nombre || "Lic. María López (Docente)";
+      const nombreTerapeuta = s.TerapeutaAsignado?.nombre || "Lic. Juan Pérez (Terapeuta)";
+
       return `
         <div class="col-md-4 col-sm-6">
-          <div class="sala-badge-card ${esActiva ? 'active' : ''}" onclick="seleccionarSala(${s.id})" style="border-left: 5px solid ${s.color || '#0284c7'};">
+          <div class="sala-badge-card ${esActiva ? 'active' : ''}" onclick="seleccionarSala(${s.id})" style="border-left: 6px solid ${s.color || '#0284c7'};">
             <div class="d-flex justify-content-between align-items-center mb-1">
               <h6 class="fw-bold text-dark mb-0">${s.nombre}</h6>
               <span class="badge bg-light text-dark border small text-capitalize">${s.turno}</span>
             </div>
-            <div class="text-muted small">
-              <i class="bi bi-people me-1"></i> ${countAlumnos} alumnos asignados • ${s.edad_grupo}
+            <div class="text-muted small mb-2">
+              <i class="bi bi-people me-1"></i> ${countAlumnos} alumnos • ${s.edad_grupo}
             </div>
-            <div class="text-muted small" style="font-size: 0.75rem;">
-              <i class="bi bi-person-badge me-1"></i> Docente: ${s.DocenteTitular?.nombre || "Sin asignar"}
+            
+            <div class="p-2 bg-light rounded-3 small">
+              <div class="text-dark fw-semibold" style="font-size: 0.75rem;">
+                <i class="bi bi-person-badge text-primary me-1"></i> Docente: ${nombreDocente}
+              </div>
+              <div class="text-dark fw-semibold" style="font-size: 0.75rem;">
+                <i class="bi bi-heart-pulse-fill text-danger me-1"></i> Terapeuta: ${nombreTerapeuta}
+              </div>
             </div>
           </div>
         </div>
@@ -217,7 +247,7 @@ window.guardarObservacionAsistencia = async function(alumnoId, observacion, esta
 };
 
 // ==========================================
-// 4. CARGAR TAREAS Y DURACIÓN
+// 4. CARGAR TAREAS INTERDISCIPLINARIAS
 // ==========================================
 async function cargarTareas() {
   try {
@@ -236,9 +266,11 @@ async function cargarTareas() {
 
     contenedor.innerHTML = todasLasTareas.map(t => {
       const completada = t.completada;
+      const esInterdisciplinar = t.es_interdisciplinaria || t.tipo === "interdisciplinaria";
+
       return `
         <div class="col-md-6 col-lg-4">
-          <div class="card h-100 border rounded-4 p-3 shadow-sm ${completada ? 'bg-light opacity-75' : 'bg-white'}">
+          <div class="card h-100 border rounded-4 p-3 shadow-sm ${completada ? 'bg-light opacity-75' : 'bg-white'}" style="${esInterdisciplinar ? 'border-top: 4px solid #7c3aed !important;' : ''}">
             <div class="d-flex justify-content-between align-items-start mb-2">
               <span class="badge bg-primary-subtle text-primary border border-primary small">
                 <i class="bi bi-book me-1"></i>${t.materia || "Materia"}
@@ -247,8 +279,29 @@ async function cargarTareas() {
                 <i class="bi bi-stopwatch me-1"></i>${t.duracion_minutos || 30} min
               </span>
             </div>
+
+            ${esInterdisciplinar ? `
+              <div class="mb-2">
+                <span class="badge rounded-pill text-white p-2 small" style="background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%); font-size: 0.72rem;">
+                  <i class="bi bi-link-45deg me-1"></i> Coordinada Docente + Terapeuta
+                </span>
+              </div>
+            ` : ''}
+
             <h6 class="fw-bold text-dark ${completada ? 'text-decoration-line-through' : ''}">${t.titulo}</h6>
-            <p class="text-secondary small mb-3">${t.descripcion || "Sin descripción adicional."}</p>
+            <p class="text-secondary small mb-2">${t.descripcion || "Sin descripción adicional."}</p>
+
+            ${t.objetivo_terapeutico ? `
+              <div class="p-2 bg-purple-subtle rounded-3 mb-3 border border-purple" style="background-color: #f5f3ff; border-color: #ddd6fe !important;">
+                <div class="fw-bold text-purple small mb-1" style="color: #6d28d9;">
+                  <i class="bi bi-heart-pulse-fill me-1"></i> Pautas Terapéuticas:
+                </div>
+                <div class="text-muted" style="font-size: 0.78rem;">
+                  ${t.objetivo_terapeutico}
+                </div>
+              </div>
+            ` : ''}
+
             <div class="pt-2 border-top d-flex justify-content-between align-items-center mt-auto">
               <button class="btn btn-sm ${completada ? 'btn-success' : 'btn-outline-secondary'}" onclick="alternarTarea(${t.id})">
                 <i class="bi ${completada ? 'bi-check-circle-fill' : 'bi-circle'} me-1"></i> ${completada ? 'Completada' : 'Marcar Hecha'}
@@ -290,9 +343,16 @@ async function cargarAlumnos() {
     todosLosAlumnos = await res.json();
 
     const selectModalReporte = document.getElementById("nuevoAlumnoId");
+    const selectModalTarea = document.getElementById("tareaAlumnoId");
+
     if (selectModalReporte) {
       selectModalReporte.innerHTML = '<option value="">Seleccione alumno...</option>' +
         todosLosAlumnos.map(a => `<option value="${a.id}">${a.nombre} ${a.apellido} (${a.grado || "Sala"})</option>`).join("");
+    }
+
+    if (selectModalTarea) {
+      selectModalTarea.innerHTML = '<option value="">Toda la Sala</option>' +
+        todosLosAlumnos.map(a => `<option value="${a.id}">${a.nombre} ${a.apellido}</option>`).join("");
     }
   } catch (e) {}
 }
@@ -388,7 +448,7 @@ function renderizarReportes(reportes) {
 // 6. INICIALIZACIÓN DE FORMULARIOS MODAL
 // ==========================================
 function inicializarModales() {
-  // Crear Sala
+  // Crear Sala Co-Gestionada
   const formSala = document.getElementById("formNuevaSala");
   if (formSala) {
     formSala.addEventListener("submit", async (e) => {
@@ -396,6 +456,7 @@ function inicializarModales() {
       const body = {
         jardin_id: document.getElementById("salaJardinId").value,
         nombre: document.getElementById("salaNombre").value,
+        terapeuta_asignado_id: document.getElementById("salaTerapeutaId").value,
         edad_grupo: document.getElementById("salaEdad").value,
         turno: document.getElementById("salaTurno").value,
         capacidad: document.getElementById("salaCapacidad").value,
@@ -418,17 +479,23 @@ function inicializarModales() {
     });
   }
 
-  // Crear Tarea con Duración
+  // Crear Tarea con Coordinación Terapéutica
   const formTarea = document.getElementById("formNuevaTarea");
   if (formTarea) {
     formTarea.addEventListener("submit", async (e) => {
       e.preventDefault();
+      const esInter = document.getElementById("tareaEsInterdisciplinaria").checked;
+
       const body = {
         titulo: document.getElementById("tareaTitulo").value,
         materia: document.getElementById("tareaMateria").value,
         duracion_minutos: document.getElementById("tareaDuracion").value,
         sala_id: document.getElementById("tareaSalaId").value || null,
-        descripcion: document.getElementById("tareaDescripcion").value
+        alumno_id: document.getElementById("tareaAlumnoId").value || null,
+        descripcion: document.getElementById("tareaDescripcion").value,
+        es_interdisciplinaria: esInter,
+        terapeuta_id: esInter ? document.getElementById("tareaTerapeutaId").value : null,
+        objetivo_terapeutico: esInter ? document.getElementById("tareaObjetivoTerapeutico").value : null
       };
 
       const res = await fetch("/api/tareas", {

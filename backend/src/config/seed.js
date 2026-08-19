@@ -97,7 +97,7 @@ export async function sembrarDatos(forzar = false) {
       }
     });
 
-    // 3. Salas
+    // 3. Salas Co-Gestionadas (Docente + Terapeuta)
     const [salaAmarilla] = await Sala.findOrCreate({
       where: { nombre: "Sala Amarilla - 4 Años" },
       defaults: {
@@ -107,9 +107,14 @@ export async function sembrarDatos(forzar = false) {
         turno: "mañana",
         capacidad: 18,
         jardin_id: jardin1.id,
-        docente_titular_id: docente.id
+        docente_titular_id: docente.id,
+        terapeuta_asignado_id: terapeuta.id
       }
     });
+    if (!salaAmarilla.terapeuta_asignado_id) {
+      salaAmarilla.terapeuta_asignado_id = terapeuta.id;
+      await salaAmarilla.save();
+    }
 
     const [salaCeleste] = await Sala.findOrCreate({
       where: { nombre: "Sala Celeste - 5 Años Inclusiva" },
@@ -120,9 +125,14 @@ export async function sembrarDatos(forzar = false) {
         turno: "tarde",
         capacidad: 20,
         jardin_id: jardin1.id,
-        docente_titular_id: docente.id
+        docente_titular_id: docente.id,
+        terapeuta_asignado_id: terapeuta.id
       }
     });
+    if (!salaCeleste.terapeuta_asignado_id) {
+      salaCeleste.terapeuta_asignado_id = terapeuta.id;
+      await salaCeleste.save();
+    }
 
     const [salaVerde] = await Sala.findOrCreate({
       where: { nombre: "Sala Verde - 3 Años" },
@@ -133,7 +143,8 @@ export async function sembrarDatos(forzar = false) {
         turno: "mañana",
         capacidad: 15,
         jardin_id: jardin2.id,
-        docente_titular_id: docente.id
+        docente_titular_id: docente.id,
+        terapeuta_asignado_id: terapeuta.id
       }
     });
 
@@ -178,18 +189,23 @@ export async function sembrarDatos(forzar = false) {
       }
     });
 
-    // 6. Tareas con Materia y Duración
+    // 6. Tareas Coordinadas Interdisciplinarias (Docente + Terapeuta)
     await Tarea.findOrCreate({
-      where: { titulo: "Modelado con Plastilina Sensorial y Reconocimiento de Texturas" },
+      where: { titulo: "Modelado con Plastilina Sensorial y Texturas" },
       defaults: {
-        titulo: "Modelado con Plastilina Sensorial y Reconocimiento de Texturas",
+        titulo: "Modelado con Plastilina Sensorial y Texturas",
         descripcion: "Trabajar la motricidad fina y prensión palmar en mesa de trabajo.",
         materia: "Expresión Plástica y Sensorial",
         duracion_minutos: 35,
-        tipo: "docente",
+        tipo: "interdisciplinaria",
+        es_interdisciplinaria: true,
+        objetivo_terapeutico: "Integración sensorial táctil: permitir pausas propioceptivas de 2 min y usar rodillos de madera adaptados.",
         sala_id: salaAmarilla.id,
         alumno_id: alumno1.id,
+        docente_id: docente.id,
+        terapeuta_id: terapeuta.id,
         creador_nombre: docente.nombre,
+        terapeuta_nombre: terapeuta.nombre,
         completada: false
       }
     });
@@ -201,10 +217,15 @@ export async function sembrarDatos(forzar = false) {
         descripcion: "Favorecer la pronunciación y el turno conversacional mediante SAAC.",
         materia: "Música y Lenguaje",
         duracion_minutos: 30,
-        tipo: "docente",
+        tipo: "interdisciplinaria",
+        es_interdisciplinaria: true,
+        objetivo_terapeutico: "Fonoaudiología: modelado de sonidos bilabiales y señalar el pictograma antes de cada estrofa.",
         sala_id: salaAmarilla.id,
         alumno_id: alumno2.id,
+        docente_id: docente.id,
+        terapeuta_id: terapeuta.id,
         creador_nombre: docente.nombre,
+        terapeuta_nombre: terapeuta.nombre,
         completada: true
       }
     });
@@ -218,11 +239,11 @@ export async function sembrarDatos(forzar = false) {
         sala_id: salaAmarilla.id,
         estado: "presente",
         fecha: fechaHoy,
-        observacion: "Excelente jornada en sala amarilla."
+        observacion: "Excelente jornada en sala amarilla coordinada."
       }
     });
 
-    console.log("✅ Seed completado exitosamente sin errores.");
+    console.log("✅ Seed interdisciplinario completado exitosamente.");
   } catch (e) {
     console.error("❌ Error en seed:", e);
   }
