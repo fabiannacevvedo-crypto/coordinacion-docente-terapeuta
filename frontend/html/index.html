@@ -4,131 +4,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acceso | RED NEC</title>
+    <title>Acceso & Registro | RED NEC</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
 
     <style>
-        /* =========================================
-           CONFIGURACIÓN GENERAL
-        ========================================= */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
-
         body {
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            background: linear-gradient(135deg, #e5e7eb, #f3f4f6, #dbeafe);
+            background: linear-gradient(135deg, #090e17 0%, #0f172a 50%, #0c4a6e 100%);
         }
 
-        /* =========================================
-           CONTENEDOR PRINCIPAL
-        ========================================= */
-        .contenedor {
+        .auth-container {
             width: 100%;
-            max-width: 950px;
+            max-width: 960px;
             background: #ffffff;
-            border-radius: 20px;
+            border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
             display: grid;
-            grid-template-columns: 1fr 1.1fr;
+            grid-template-columns: 1fr 1.15fr;
         }
 
-        /* =========================================
-           PANEL IZQUIERDO
-        ========================================= */
-        .presentacion {
-            background: linear-gradient(145deg, #0f172a, #1e293b, #0e7490);
+        .auth-presentation {
+            background: linear-gradient(145deg, #0f172a 0%, #1e293b 60%, #0369a1 100%);
             color: white;
             padding: 45px 35px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             position: relative;
-            overflow: hidden;
         }
 
-        .presentacion h1 {
-            font-size: 32px;
-            margin-bottom: 12px;
-            font-weight: 700;
-        }
-
-        .presentacion p {
-            font-size: 15px;
-            line-height: 1.6;
-            color: #cbd5e1;
-        }
-
-        .icono {
-            font-size: 48px;
-            margin-bottom: 15px;
-        }
-
-        .enlace-inicio {
-            display: inline-block;
-            margin-top: 25px;
-            color: #38bdf8;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            transition: color 0.2s ease;
-        }
-
-        .enlace-inicio:hover {
-            color: #7dd3fc;
-            text-decoration: underline;
-        }
-
-        /* =========================================
-           PANEL DERECHO (FORMULARIOS)
-        ========================================= */
-        .formularios {
-            padding: 40px;
+        .auth-forms {
+            padding: 45px 40px;
             background: #ffffff;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
 
-        /* Pestañas para alternar Login / Registro */
-        .tabs {
+        .tabs-auth {
             display: flex;
             gap: 10px;
             margin-bottom: 25px;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 10px;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 12px;
         }
 
-        .tab-btn {
+        .tab-btn-auth {
             background: none;
             border: none;
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 15px;
+            font-weight: 700;
             color: #64748b;
             cursor: pointer;
-            padding: 8px 16px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            box-shadow: none;
-            width: auto;
+            padding: 8px 18px;
+            border-radius: 10px;
+            transition: all 0.25s ease;
         }
 
-        .tab-btn.activo {
+        .tab-btn-auth.activo {
             color: #0284c7;
             background: #e0f2fe;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
         }
 
         .form-seccion {
@@ -139,11 +81,9 @@
             display: block;
         }
 
-        /* =========================================
-           GRUPOS DE INPUT
-        ========================================= */
         .grupo-input {
             position: relative;
+            margin-bottom: 14px;
         }
 
         .grupo-input span {
@@ -156,61 +96,31 @@
             z-index: 2;
         }
 
-        input, select {
+        .input-auth {
             width: 100%;
             padding: 12px 15px 12px 42px;
-            border: 1px solid #cbd5e1;
-            border-radius: 10px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
             font-size: 14px;
             outline: none;
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
             background: #f8fafc;
             color: #1e293b;
         }
 
-        input:focus, select:focus {
+        .input-auth:focus {
             border-color: #0284c7;
             background: white;
-            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+            box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.15);
         }
 
-        /* =========================================
-           BOTONES
-        ========================================= */
-        .btn-principal {
-            width: 100%;
-            padding: 13px;
-            border: none;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #0284c7, #0369a1);
-            color: white;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
-            margin-top: 5px;
-        }
-
-        .btn-principal:hover {
-            background: linear-gradient(135deg, #0369a1, #075985);
-            transform: translateY(-1px);
-        }
-
-        .btn-principal:active {
-            transform: translateY(0);
-        }
-
-        /* =========================================
-           MENSAJES DE ALERTA
-        ========================================= */
         #mensaje {
             margin-top: 15px;
             padding: 12px;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 14px;
             text-align: center;
-            font-weight: 500;
+            font-weight: 600;
             display: none;
         }
 
@@ -228,69 +138,24 @@
             display: block !important;
         }
 
-        /* =========================================
-           PANEL DE PERFIL (SESIÓN ACTIVA)
-        ========================================= */
         #perfil {
             display: none;
             background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 15px;
-        }
-
-        #perfil h2 {
-            font-size: 18px;
-            color: #166534;
-            margin-bottom: 10px;
-        }
-
-        #datosPerfil {
-            font-size: 14px;
-            color: #374151;
-            line-height: 1.8;
-            margin-bottom: 15px;
-        }
-
-        .acciones-perfil {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .btn-accion {
-            flex: 1;
-            padding: 10px;
-            border-radius: 8px;
-            text-align: center;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-        }
-
-        .btn-dashboard {
-            background: #0284c7;
-            color: white;
-        }
-
-        .btn-logout {
-            background: #ef4444;
-            color: white;
+            border: 1.5px solid #bbf7d0;
+            border-radius: 16px;
+            padding: 24px;
         }
 
         @media (max-width: 768px) {
-            .contenedor {
+            .auth-container {
                 grid-template-columns: 1fr;
                 max-width: 480px;
             }
-            .presentacion {
+            .auth-presentation {
                 padding: 30px 20px;
             }
-            .formularios {
-                padding: 25px 20px;
+            .auth-forms {
+                padding: 30px 20px;
             }
         }
     </style>
@@ -298,41 +163,58 @@
 
 <body>
 
-    <div class="contenedor">
+    <div class="auth-container">
 
-        <!-- PANEL IZQUIERDO -->
-        <div class="presentacion">
+        <!-- PANEL IZQUIERDO DE PRESENTACIÓN -->
+        <div class="auth-presentation">
             <div>
-                <div class="icono">🤝</div>
-                <h1>RED NEC</h1>
-                <p>Coordinación integral entre docentes, terapeutas y familias para el seguimiento pedagógico y terapéutico.</p>
+                <div class="d-inline-flex align-items-center justify-content-center bg-info bg-opacity-25 p-3 rounded-4 mb-3 text-info fs-1">
+                    <i class="bi bi-mortarboard-fill"></i>
+                </div>
+                <h1 class="fw-bold mb-2 text-white">RED NEC</h1>
+                <p class="text-light opacity-90 small">
+                    Plataforma Integral de Coordinación Docente-Terapeuta-Familia en Nivel Inicial.
+                </p>
+                <div class="mt-4 pt-3 border-top border-light border-opacity-10 d-flex flex-column gap-2 text-light small opacity-80">
+                    <div><i class="bi bi-check2-circle text-info me-2"></i> Gestión de alumnos y actividades</div>
+                    <div><i class="bi bi-check2-circle text-info me-2"></i> Reportes fotográficos y analíticas</div>
+                    <div><i class="bi bi-check2-circle text-info me-2"></i> Comunicación y articulación directa</div>
+                </div>
             </div>
-            <div>
-                <a href="../pages/index.html" class="enlace-inicio">← Volver al sitio principal</a>
+            <div class="mt-4">
+                <a href="../pages/index.html" class="text-info text-decoration-none fw-semibold small d-inline-flex align-items-center gap-1">
+                    <i class="bi bi-arrow-left"></i> Volver al Portal Principal
+                </a>
             </div>
         </div>
 
-        <!-- PANEL DERECHO -->
-        <div class="formularios">
+        <!-- PANEL DERECHO DE FORMULARIOS -->
+        <div class="auth-forms">
 
             <!-- Pestañas -->
-            <div class="tabs" id="tabsContenedor">
-                <button type="button" class="tab-btn activo" id="tabLoginBtn" onclick="cambiarTab('login')">Iniciar Sesión</button>
-                <button type="button" class="tab-btn" id="tabRegistroBtn" onclick="cambiarTab('registro')">Crear Cuenta</button>
+            <div class="tabs-auth" id="tabsContenedor">
+                <button type="button" class="tab-btn-auth activo" id="tabLoginBtn" onclick="cambiarTab('login')">
+                    <i class="bi bi-box-arrow-in-right me-1"></i> Iniciar Sesión
+                </button>
+                <button type="button" class="tab-btn-auth" id="tabRegistroBtn" onclick="cambiarTab('registro')">
+                    <i class="bi bi-person-plus me-1"></i> Crear Cuenta
+                </button>
             </div>
 
             <!-- FORMULARIO LOGIN -->
             <div class="form-seccion activo" id="seccionLogin">
                 <form id="loginForm">
                     <div class="grupo-input">
-                        <span>✉️</span>
-                        <input type="email" id="emailLogin" placeholder="Correo electrónico" required autocomplete="email">
+                        <span><i class="bi bi-envelope"></i></span>
+                        <input type="email" id="emailLogin" class="input-auth" placeholder="Correo electrónico" required autocomplete="email">
                     </div>
                     <div class="grupo-input">
-                        <span>🔒</span>
-                        <input type="password" id="passwordLogin" placeholder="Contraseña" required autocomplete="current-password">
+                        <span><i class="bi bi-lock"></i></span>
+                        <input type="password" id="passwordLogin" class="input-auth" placeholder="Contraseña" required autocomplete="current-password">
                     </div>
-                    <button type="submit" class="btn-principal" id="btnLogin">Ingresar</button>
+                    <button type="submit" class="btn btn-gradient-primary w-100 py-3 mt-2 shadow" id="btnLogin">
+                        <i class="bi bi-box-arrow-in-right me-1"></i> Ingresar al Sistema
+                    </button>
                 </form>
             </div>
 
@@ -340,43 +222,55 @@
             <div class="form-seccion" id="seccionRegistro">
                 <form id="registroForm">
                     <div class="grupo-input">
-                        <span>👤</span>
-                        <input type="text" id="nombre" placeholder="Nombre completo" required>
+                        <span><i class="bi bi-person"></i></span>
+                        <input type="text" id="nombre" class="input-auth" placeholder="Nombre completo" required>
                     </div>
                     <div class="grupo-input">
-                        <span>✉️</span>
-                        <input type="email" id="emailRegistro" placeholder="Correo electrónico" required autocomplete="email">
+                        <span><i class="bi bi-envelope"></i></span>
+                        <input type="email" id="emailRegistro" class="input-auth" placeholder="Correo electrónico" required autocomplete="email">
                     </div>
                     <div class="grupo-input">
-                        <span>🔒</span>
-                        <input type="password" id="passwordRegistro" placeholder="Contraseña (mínimo 6 caracteres)" required minlength="6" autocomplete="new-password">
+                        <span><i class="bi bi-lock"></i></span>
+                        <input type="password" id="passwordRegistro" class="input-auth" placeholder="Contraseña (mínimo 6 caracteres)" required minlength="6" autocomplete="new-password">
                     </div>
                     <div class="grupo-input">
-                        <span>🏷️</span>
-                        <select id="rolRegistro" onchange="alternarMatricula(this.value)" required>
-                            <option value="docente">Docente</option>
-                            <option value="terapeuta">Terapeuta</option>
+                        <span><i class="bi bi-person-badge"></i></span>
+                        <select id="rolRegistro" class="input-auth" onchange="alternarMatricula(this.value)" required>
+                            <option value="docente">Docente de Nivel Inicial</option>
+                            <option value="terapeuta">Terapeuta / Profesional</option>
                             <option value="familiar" selected>Familiar / Tutor</option>
                         </select>
                     </div>
                     <div class="grupo-input" id="grupoMatricula" style="display: none;">
-                        <span>📋</span>
-                        <input type="text" id="matriculaRegistro" placeholder="N° de Matrícula Profesional">
+                        <span><i class="bi bi-card-checklist"></i></span>
+                        <input type="text" id="matriculaRegistro" class="input-auth" placeholder="N° de Matrícula Profesional">
                     </div>
-                    <button type="submit" class="btn-principal" id="btnRegistro">Registrarse</button>
+                    <button type="submit" class="btn btn-gradient-accent w-100 py-3 mt-2 shadow" id="btnRegistro">
+                        <i class="bi bi-person-plus-fill me-1"></i> Completar Registro
+                    </button>
                 </form>
             </div>
 
-            <!-- MENSAJES -->
+            <!-- MENSAJES DE ESTADO -->
             <div id="mensaje"></div>
 
-            <!-- PERFIL CON SESIÓN ACTIVA -->
+            <!-- PANEL DE SESIÓN ACTIVA -->
             <div id="perfil">
-                <h2>✅ Sesión Activa</h2>
-                <div id="datosPerfil"></div>
-                <div class="acciones-perfil">
-                    <a href="../pages/seguimiento.html" class="btn-accion btn-dashboard">Panel de Seguimiento</a>
-                    <button id="logout" class="btn-accion btn-logout">Cerrar Sesión</button>
+                <div class="d-flex align-items-center gap-2 mb-2 text-success">
+                    <i class="bi bi-patch-check-fill fs-4"></i>
+                    <h5 class="fw-bold mb-0">Sesión Activa</h5>
+                </div>
+                <div id="datosPerfil" class="small mb-3 text-secondary"></div>
+                <div class="d-flex flex-column gap-2">
+                    <a href="../pages/docente.html" class="btn btn-primary rounded-pill py-2 fw-semibold">
+                        <i class="bi bi-person-workspace me-1"></i> Ir al Portal Docente & Tareas
+                    </a>
+                    <a href="../pages/seguimiento.html" class="btn btn-info text-white rounded-pill py-2 fw-semibold">
+                        <i class="bi bi-graph-up-arrow me-1"></i> Ir al Panel de Seguimiento
+                    </a>
+                    <button id="logout" class="btn btn-outline-danger rounded-pill py-2 fw-semibold mt-1">
+                        <i class="bi bi-box-arrow-left me-1"></i> Cerrar Sesión
+                    </button>
                 </div>
             </div>
 
@@ -385,12 +279,8 @@
     </div>
 
     <script>
-        // =========================================
-        // CONFIGURACIÓN API
-        // =========================================
         const API = "/api";
 
-        // Elementos DOM
         const tabLoginBtn = document.getElementById("tabLoginBtn");
         const tabRegistroBtn = document.getElementById("tabRegistroBtn");
         const seccionLogin = document.getElementById("seccionLogin");
@@ -404,7 +294,6 @@
         const datosPerfil = document.getElementById("datosPerfil");
         const logoutBtn = document.getElementById("logout");
 
-        // Cambiar entre pestañas Login y Registro
         function cambiarTab(tipo) {
             mensaje.className = "";
             mensaje.style.display = "none";
@@ -422,7 +311,6 @@
             }
         }
 
-        // Mostrar u ocultar campo matrícula según rol
         function alternarMatricula(rol) {
             const grupoMatricula = document.getElementById("grupoMatricula");
             const inputMatricula = document.getElementById("matriculaRegistro");
@@ -436,16 +324,12 @@
             }
         }
 
-        // Mostrar mensajes de alerta
         function mostrarMensaje(texto, tipo) {
             mensaje.textContent = texto;
             mensaje.className = tipo === "exito" ? "msg-exito" : "msg-error";
             mensaje.style.display = "block";
         }
 
-        // =========================================
-        // 1. REGISTRO
-        // =========================================
         registroForm.addEventListener("submit", async function(e) {
             e.preventDefault();
 
@@ -455,7 +339,7 @@
             const rol = document.getElementById("rolRegistro").value;
             const matricula = document.getElementById("matriculaRegistro").value.trim();
 
-            mostrarMensaje("Registrando...", "exito");
+            mostrarMensaje("Registrando usuario...", "exito");
 
             try {
                 const res = await fetch(`${API}/auth/register`, {
@@ -475,13 +359,10 @@
                 }
             } catch (err) {
                 console.error("Error de red:", err);
-                mostrarMensaje("No se pudo conectar con el servidor (verifica que el backend esté encendido en http://localhost:3001).", "error");
+                mostrarMensaje("No se pudo conectar con el servidor.", "error");
             }
         });
 
-        // =========================================
-        // 2. LOGIN
-        // =========================================
         loginForm.addEventListener("submit", async function(e) {
             e.preventDefault();
 
@@ -502,7 +383,6 @@
                 if (res.ok) {
                     mostrarMensaje(data.msg || "¡Login exitoso!", "exito");
 
-                    // Guardar token y usuario en localStorage
                     localStorage.setItem("token", data.token);
                     if (data.usuario) {
                         localStorage.setItem("usuario", JSON.stringify(data.usuario));
@@ -519,9 +399,6 @@
             }
         });
 
-        // =========================================
-        // 3. VERIFICAR SESIÓN (PERFIL)
-        // =========================================
         async function verificarSesion() {
             const token = localStorage.getItem("token");
             if (!token) {
@@ -534,15 +411,12 @@
             try {
                 const res = await fetch(`${API}/perfil`, {
                     method: "GET",
-                    headers: {
-                        "Authorization": `Bearer ${token}`
-                    }
+                    headers: { "Authorization": `Bearer ${token}` }
                 });
 
                 const data = await res.json();
 
                 if (res.ok && data.usuario) {
-                    // Ocultar formularios y mostrar tarjeta de perfil
                     tabsContenedor.style.display = "none";
                     seccionLogin.style.display = "none";
                     seccionRegistro.style.display = "none";
@@ -552,10 +426,9 @@
                     datosPerfil.innerHTML = `
                         <strong>Nombre:</strong> ${u.nombre || 'Usuario'}<br>
                         <strong>Email:</strong> ${u.email}<br>
-                        <strong>Rol:</strong> <span style="text-transform: capitalize;">${u.rol || 'Familiar'}</span>
+                        <strong>Rol:</strong> <span class="badge bg-primary text-capitalize">${u.rol || 'Familiar'}</span>
                     `;
                 } else {
-                    // Token expirado o inválido
                     localStorage.removeItem("token");
                     localStorage.removeItem("usuario");
                     perfil.style.display = "none";
@@ -567,9 +440,6 @@
             }
         }
 
-        // =========================================
-        // 4. CERRAR SESIÓN
-        // =========================================
         logoutBtn.addEventListener("click", () => {
             localStorage.removeItem("token");
             localStorage.removeItem("usuario");
@@ -579,10 +449,7 @@
             mostrarMensaje("Has cerrado sesión.", "exito");
         });
 
-        // Comprobar si ya hay una sesión activa al cargar
         verificarSesion();
     </script>
-
 </body>
-
 </html>

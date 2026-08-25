@@ -69,6 +69,10 @@ app.get("/seguimiento", (req, res) => {
   res.sendFile(path.join(pagesPath, "seguimiento.html"));
 });
 
+app.get("/docente", (req, res) => {
+  res.sendFile(path.join(pagesPath, "docente.html"));
+});
+
 app.get("/informacion", (req, res) => {
   res.sendFile(path.join(pagesPath, "informacion.html"));
 });
@@ -131,6 +135,7 @@ app.listen(PORT, () => {
   console.log(`🏠 Portal Principal:   http://localhost:${PORT}/`);
   console.log(`🔐 Acceso / Login:     http://localhost:${PORT}/html/index.html (o /login)`);
   console.log(`📊 Seguimiento:        http://localhost:${PORT}/pages/seguimiento.html (o /seguimiento)`);
+  console.log(`👩‍🏫 Portal Docente:     http://localhost:${PORT}/pages/docente.html (o /docente)`);
   console.log(`ℹ️  Información:        http://localhost:${PORT}/pages/informacion.html (o /informacion)`);
   console.log(`📞 Contacto:           http://localhost:${PORT}/pages/contacto.html (o /contacto)`);
   console.log(`======================================================\n`);

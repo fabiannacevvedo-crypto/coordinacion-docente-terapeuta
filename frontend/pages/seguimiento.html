@@ -3,135 +3,287 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Seguimiento - RED NEC</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"/>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <title>Seguimiento & Reportes - RED NEC</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    :root {
-      --nec-dark: #12222b;
-      --nec-accent: #17a2b8;
-      --nec-accent-soft: #e6f6f8;
-    }
-    body { background:#f7fafb; font-family:"Segoe UI",sans-serif; }
-
-    .navbar {
-      background: linear-gradient(90deg, #17a2b8 0%, #138496 100%);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    }
-    .navbar-brand { font-weight: 700; letter-spacing: 0.5px; }
-    .nav-link { color:#e6f6f8 !important; transition: color 0.2s ease; }
-    .nav-link:hover, .nav-link.active { color:#fff !important; text-decoration: underline; }
-
-    .seg-hero {
-      background: linear-gradient(135deg, var(--nec-dark) 0%, #1c3b47 100%);
-      color:#fff; text-align:center; padding:4rem 0;
-      border-radius:0 0 1.5rem 1.5rem;
-    }
-
-    .stat-card { border:none; border-radius:1rem; background:#fff; box-shadow:0 4px 14px rgba(0,0,0,.08); }
-    .stat-number { font-size:2rem; font-weight:700; color:var(--nec-accent); }
-
-    .alumno-card { border:none; border-radius:1rem; box-shadow:0 2px 10px rgba(0,0,0,.07); cursor:pointer; transition:all .2s ease; }
-    .alumno-card:hover { box-shadow:0 8px 22px rgba(0,0,0,.12); transform:translateY(-3px); }
-    .avatar-inicial {
-      width:48px; height:48px; border-radius:50%; background:var(--nec-accent-soft);
-      color:var(--nec-accent); font-weight:700; display:flex; align-items:center; justify-content:center;
-    }
-
-    footer { background-color: var(--nec-dark); color:#e6f6f8; font-size:.9rem; }
-  </style>
 </head>
 <body>
-  <!-- NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-info bg-opacity-90 shadow-sm sticky-top">
+
+  <!-- NAVBAR MODERNA -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-rednec sticky-top">
     <div class="container">
-      <a class="navbar-brand fw-bold text-white" href="./index.html">RED NEC</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <a class="navbar-brand" href="./index.html">
+        <i class="bi bi-bar-chart-fill text-info fs-3"></i>
+        <span>RED NEC</span>
+      </a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link fw-semibold" href="./index.html">Inicio</a></li>
-          <li class="nav-item"><a class="nav-link fw-semibold" href="./informacion.html">Información</a></li>
-          <li class="nav-item"><a class="nav-link fw-semibold active" href="./seguimiento.html">Seguimiento</a></li>
-          <li class="nav-item"><a class="nav-link fw-semibold" href="./contacto.html">Contacto</a></li>
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-1">
+          <li class="nav-item"><a class="nav-link" href="./index.html"><i class="bi bi-house me-1"></i> Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="./informacion.html"><i class="bi bi-info-circle me-1"></i> Información</a></li>
+          <li class="nav-item"><a class="nav-link active" href="./seguimiento.html"><i class="bi bi-graph-up-arrow me-1"></i> Seguimiento</a></li>
+          <li class="nav-item"><a class="nav-link" href="./docente.html"><i class="bi bi-person-workspace me-1"></i> Portal Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="./contacto.html"><i class="bi bi-envelope me-1"></i> Contacto</a></li>
         </ul>
         <div class="d-flex gap-2">
-          <a href="../html/index.html" class="btn btn-outline-light fw-semibold" id="btnAccesoNav">
-            <i class="bi bi-person-circle me-1"></i> Mi Cuenta / Acceso
+          <a href="../html/index.html" class="btn btn-outline-light rounded-pill px-3 fw-semibold">
+            <i class="bi bi-person-circle me-1"></i> Mi Cuenta
           </a>
         </div>
       </div>
     </div>
   </nav>
 
-  <!-- HERO -->
-  <section class="seg-hero">
-    <div class="container">
-      <h2 class="fw-bold mb-2">Seguimiento de alumnos</h2>
-      <p class="mb-0 opacity-75">Un solo lugar para registrar avances y observaciones.</p>
-    </div>
-  </section>
+  <!-- HERO HEADER CON METRICAS -->
+  <header class="hero-gradient">
+    <div class="container position-relative">
+      <div class="row align-items-center mb-4">
+        <div class="col-lg-8">
+          <div class="hero-tag">
+            <i class="bi bi-activity"></i> Panel Interdisciplinario de Evolución
+          </div>
+          <h1 class="display-5 fw-bold text-white mb-2">Seguimiento Integral de Alumnos</h1>
+          <p class="lead text-light opacity-90 mb-0">
+            Registra reportes con fotos, descripciones de avances pedagógicos y terapéuticos, y monitorea métricas en tiempo real.
+          </p>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+          <a href="#seccionGenerador" class="btn btn-gradient-warning px-4 py-2">
+            <i class="bi bi-plus-circle-fill me-1"></i> Crear Nuevo Reporte
+          </a>
+        </div>
+      </div>
 
-  <!-- MAIN -->
-  <main class="container pb-5">
-    <!-- Estadísticas -->
-    <div class="row g-3 mb-4">
-      <div class="col-6 col-md-3"><div class="stat-card p-3 text-center"><div class="stat-number" id="stat-total">0</div><div class="text-muted small">Alumnos activos</div></div></div>
-      <div class="col-6 col-md-3"><div class="stat-card p-3 text-center"><div class="stat-number" id="stat-notas">0</div><div class="text-muted small">Observaciones (mes)</div></div></div>
-      <div class="col-6 col-md-3"><div class="stat-card p-3 text-center"><div class="stat-number" style="color:#2fb380" id="stat-buen">0</div><div class="text-muted small">Progreso sostenido</div></div></div>
-      <div class="col-6 col-md-3"><div class="stat-card p-3 text-center"><div class="stat-number" style="color:#f0ad4e" id="stat-atencion">0</div><div class="text-muted small">Requieren atención</div></div></div>
-    </div>
+      <!-- KPI METRICAS -->
+      <div class="row g-3 pt-2">
+        <div class="col-6 col-md-3">
+          <div class="stat-card-modern p-3">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="stat-label-modern">Total Reportes</span>
+              <div class="stat-icon-wrapper bg-primary-subtle text-primary mb-0" style="width: 38px; height: 38px; font-size: 1.2rem;">
+                <i class="bi bi-folder-check"></i>
+              </div>
+            </div>
+            <div class="stat-number-modern text-primary" id="statTotalReportes">0</div>
+          </div>
+        </div>
 
-    <!-- Formulario para nuevo reporte -->
-    <div class="card shadow-sm mb-4">
-      <div class="card-header bg-primary text-white">Nuevo Reporte</div>
-      <div class="card-body">
-        <form id="form-reporte" class="row g-3">
-          <div class="col-md-4">
-            <label class="form-label">ID Alumno</label>
-            <input type="number" class="form-control" id="alumnoId" required>
+        <div class="col-6 col-md-3">
+          <div class="stat-card-modern p-3">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="stat-label-modern">Progreso Medio</span>
+              <div class="stat-icon-wrapper bg-info-subtle text-info mb-0" style="width: 38px; height: 38px; font-size: 1.2rem;">
+                <i class="bi bi-speedometer2"></i>
+              </div>
+            </div>
+            <div class="stat-number-modern text-info" id="statPromedioProgreso">0%</div>
           </div>
-          <div class="col-md-4">
-            <label class="form-label">Progreso (%)</label>
-            <input type="number" class="form-control" id="progreso" min="0" max="100" required>
+        </div>
+
+        <div class="col-6 col-md-3">
+          <div class="stat-card-modern p-3">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="stat-label-modern">Progreso Bueno</span>
+              <div class="stat-icon-wrapper bg-success-subtle text-success mb-0" style="width: 38px; height: 38px; font-size: 1.2rem;">
+                <i class="bi bi-check-circle-fill"></i>
+              </div>
+            </div>
+            <div class="stat-number-modern text-success" id="statBuenProgreso">0</div>
           </div>
-          <div class="col-md-4">
-            <label class="form-label">Estado</label>
-            <select class="form-select" id="estado">
-              <option value="bueno">Bueno</option>
-              <option value="regular">Regular</option>
-              <option value="atencion">Atención</option>
-            </select>
+        </div>
+
+        <div class="col-6 col-md-3">
+          <div class="stat-card-modern p-3">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="stat-label-modern">Atención Prioritaria</span>
+              <div class="stat-icon-wrapper bg-danger-subtle text-danger mb-0" style="width: 38px; height: 38px; font-size: 1.2rem;">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+              </div>
+            </div>
+            <div class="stat-number-modern text-danger" id="statRequierenAtencion">0</div>
           </div>
-          <div class="col-12">
-            <label class="form-label">Observaciones</label>
-            <textarea class="form-control" id="observaciones" rows="2"></textarea>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="container py-5">
+
+    <!-- SECCIÓN 1: FORMULARIO GENERADOR DE REPORTES (SOLICITADO POR EL USUARIO) -->
+    <section class="mb-5" id="seccionGenerador">
+      <div class="card-modern card-gradient-top p-4 p-md-5">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4 pb-3 border-bottom">
+          <div>
+            <h3 class="fw-bold mb-1 text-dark">
+              <i class="bi bi-file-earmark-medical-fill text-primary me-2"></i>Generador de Reporte de Alumno
+            </h3>
+            <p class="text-muted small mb-0">Completa la ficha para registrar el avance de un estudiante y enviarlo a la base de datos.</p>
           </div>
-          <div class="col-12 text-end">
-            <button type="submit" class="btn btn-success">Guardar Reporte</button>
+          <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-3 py-2">
+            <i class="bi bi-database-check me-1"></i> Conexión Directa MySQL
+          </span>
+        </div>
+
+        <form id="formNuevoReporte">
+          <div class="row g-4">
+            
+            <!-- Selector de Alumno Registrado -->
+            <div class="col-md-6">
+              <label for="selectAlumnoReporte" class="form-label fw-bold">
+                <i class="bi bi-person-badge text-primary me-1"></i> Seleccionar Alumno *
+              </label>
+              <select id="selectAlumnoReporte" class="form-select form-select-modern" required>
+                <option value="" disabled selected>-- Cargando lista de alumnos... --</option>
+              </select>
+              <small class="text-muted">Si no aparece en la lista, puedes ingresar el ID manualmente abajo.</small>
+            </div>
+
+            <!-- ID Alumno Manual / Alternativo -->
+            <div class="col-md-6">
+              <label for="reporteAlumnoId" class="form-label fw-bold">
+                <i class="bi bi-hash text-primary me-1"></i> ID del Alumno (Opcional si seleccionaste arriba)
+              </label>
+              <input type="number" id="reporteAlumnoId" class="form-control form-control-modern" placeholder="Ej: 1" />
+            </div>
+
+            <!-- Título del Reporte -->
+            <div class="col-md-6">
+              <label for="reporteTitulo" class="form-label fw-bold">
+                <i class="bi bi-card-heading text-info me-1"></i> Título del Reporte / Área de Enfoque
+              </label>
+              <input type="text" id="reporteTitulo" class="form-control form-control-modern" placeholder="Ej: Evolución en Fonación y Socialización" value="Reporte de Evolución Pedagógica / Terapéutica" />
+            </div>
+
+            <!-- Estado de Evolución -->
+            <div class="col-md-6">
+              <label for="reporteEstado" class="form-label fw-bold">
+                <i class="bi bi-tag-fill text-warning me-1"></i> Estado / Condición *
+              </label>
+              <select id="reporteEstado" class="form-select form-select-modern" required>
+                <option value="bueno">Progreso Favorable (Bueno)</option>
+                <option value="regular" selected>En Proceso (Regular)</option>
+                <option value="atencion">Requiere Atención Prioritaria</option>
+              </select>
+            </div>
+
+            <!-- Slider Interactivo de Progreso -->
+            <div class="col-md-6">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <label for="reporteProgreso" class="form-label fw-bold mb-0">
+                  <i class="bi bi-graph-up-arrow text-success me-1"></i> Nivel de Progreso Estimado (0% - 100%) *
+                </label>
+                <span id="badgeProgresoValor" class="badge bg-warning text-dark fs-6">50%</span>
+              </div>
+              <input type="range" class="range-slider-modern mt-2" id="reporteProgreso" min="0" max="100" value="50" step="5" required />
+            </div>
+
+            <!-- URL de Imagen / Foto de Evidencia -->
+            <div class="col-md-6">
+              <label for="reporteImagenUrl" class="form-label fw-bold">
+                <i class="bi bi-image-fill text-secondary me-1"></i> URL de Imagen o Foto de Evidencia
+              </label>
+              <input type="url" id="reporteImagenUrl" class="form-control form-control-modern" placeholder="https://images.unsplash.com/... (opcional)" />
+              
+              <!-- Previsualización dinámica de imagen -->
+              <div id="previewImagenReporte" class="mt-2 text-center p-2 bg-light rounded-3" style="display: none;">
+                <img id="imgPreviewReporte" src="" alt="Previsualización" class="rounded-3 shadow-sm" style="max-height: 100px; object-fit: cover;" />
+                <small class="text-muted d-block mt-1">Previsualización de Imagen Adjunta</small>
+              </div>
+            </div>
+
+            <!-- Descripción Detallada y Observaciones -->
+            <div class="col-12">
+              <label for="reporteObservaciones" class="form-label fw-bold">
+                <i class="bi bi-pencil-square text-primary me-1"></i> Descripción Detallada & Observaciones Clínico-Pedagógicas *
+              </label>
+              <textarea id="reporteObservaciones" class="form-control form-control-modern" rows="3" placeholder="Describe los logros alcanzados, materiales utilizados y recomendaciones para el docente o familia..." required></textarea>
+            </div>
+
+            <!-- Botón de Guardado -->
+            <div class="col-12 text-end">
+              <button type="submit" class="btn btn-gradient-primary btn-lg px-5 shadow">
+                <i class="bi bi-cloud-arrow-up-fill fs-5 me-2"></i> Guardar Reporte en Base de Datos
+              </button>
+            </div>
+
           </div>
         </form>
       </div>
-    </div>
+    </section>
 
-    <!-- Gráficas -->
-    <div class="card shadow-sm mb-4">
-      <div class="card-header bg-secondary text-white">Analíticas de Reportes</div>
-      <div class="card-body">
-        <canvas id="graficoEstados" height="120"></canvas>
-        <canvas id="graficoProgreso" height="120" class="mt-4"></canvas>
+    <!-- SECCIÓN 2: ANALÍTICAS VISUALES (CHART.JS) -->
+    <section class="mb-5">
+      <div class="row g-4">
+        <!-- Gráfico 1: Estados -->
+        <div class="col-lg-5">
+          <div class="card-modern p-4 h-100">
+            <h4 class="fw-bold mb-1"><i class="bi bi-pie-chart-fill text-info me-2"></i>Distribución de Estados</h4>
+            <p class="text-muted small mb-3">Balance general de condiciones en la sala.</p>
+            <div style="position: relative; height: 260px;">
+              <canvas id="graficoEstados"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gráfico 2: Evolución de Progreso -->
+        <div class="col-lg-7">
+          <div class="card-modern p-4 h-100">
+            <h4 class="fw-bold mb-1"><i class="bi bi-bar-chart-line-fill text-primary me-2"></i>Evolución de Progreso por Alumno</h4>
+            <p class="text-muted small mb-3">Porcentajes de logro individuales registrados en los últimos reportes.</p>
+            <div style="position: relative; height: 260px;">
+              <canvas id="graficoProgreso"></canvas>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Listado dinámico -->
-    <div class="row g-3" id="lista-alumnos"></div>
+    <!-- SECCIÓN 3: FEED DE REPORTES REGISTRADOS -->
+    <section>
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+        <div>
+          <h2 class="fw-bold mb-1"><i class="bi bi-journal-medical text-teal me-2"></i>Historial de Reportes</h2>
+          <p class="text-muted mb-0">Consulta todas las evaluaciones pedagógicas y terapéuticas registradas.</p>
+        </div>
+        
+        <!-- Barra de Búsqueda y Filtros -->
+        <div class="d-flex gap-2 flex-wrap align-items-center">
+          <div class="input-group" style="max-width: 280px;">
+            <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
+            <input type="text" id="inputBuscarReporte" class="form-control border-start-0" placeholder="Buscar por alumno o texto..." />
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-sm btn-primary active rounded-start-pill px-3" data-filtro-reporte="todos">Todos</button>
+            <button class="btn btn-sm btn-outline-secondary px-3" data-filtro-reporte="bueno">Buen Progreso</button>
+            <button class="btn btn-sm btn-outline-secondary px-3" data-filtro-reporte="regular">Regular</button>
+            <button class="btn btn-sm btn-outline-secondary rounded-end-pill px-3" data-filtro-reporte="atencion">Atención</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feed de Tarjetas de Reportes -->
+      <div class="row g-4" id="contenedorReportesFeed">
+        <div class="col-12 text-center py-5">
+          <div class="spinner-border text-info" role="status">
+            <span class="visually-hidden">Cargando reportes...</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- FOOTER -->
-  <footer class="py-3 text-center border-top">
-    <small>© 2026 RED NEC – Formosa</small>
+  <footer class="footer-modern">
+    <div class="container text-center">
+      <p class="mb-1 text-white fw-semibold">RED NEC – Nexo Educativo Colaborativo</p>
+      <p class="small text-muted mb-0">Plataforma de Integración Docente-Terapeuta-Familia | Formosa, Argentina © 2026</p>
+    </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>

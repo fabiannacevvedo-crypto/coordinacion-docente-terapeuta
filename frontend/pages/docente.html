@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portal Docente - RED NEC</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+  <!-- NAVBAR MODERNA UNIFICADA -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-rednec sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="./index.html">
+        <i class="bi bi-mortarboard-fill text-info fs-3"></i>
+        <span>RED NEC</span>
+      </a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-1">
+          <li class="nav-item"><a class="nav-link" href="./index.html"><i class="bi bi-house me-1"></i> Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="./informacion.html"><i class="bi bi-info-circle me-1"></i> Información</a></li>
+          <li class="nav-item"><a class="nav-link" href="./seguimiento.html"><i class="bi bi-graph-up-arrow me-1"></i> Seguimiento</a></li>
+          <li class="nav-item"><a class="nav-link active" href="./docente.html"><i class="bi bi-person-workspace me-1"></i> Portal Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="./contacto.html"><i class="bi bi-envelope me-1"></i> Contacto</a></li>
+        </ul>
+        <div class="d-flex gap-2">
+          <a href="../html/index.html" class="btn btn-outline-light rounded-pill px-3 fw-semibold">
+            <i class="bi bi-person-circle me-1"></i> Mi Cuenta
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO HEADER -->
+  <header class="hero-gradient">
+    <div class="container position-relative">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <div class="hero-tag">
+            <i class="bi bi-stars"></i> Espacio Exclusivo de Articulación Pedagógica
+          </div>
+          <h1 class="display-5 fw-bold text-white mb-3">Portal del Docente & Aula Inclusiva</h1>
+          <p class="lead text-light opacity-90 mb-4">
+            Supervisa a tus alumnos, consulta sus fichas pedagógicas con fotos y diagnósticos, y asigna actividades adaptadas tanto generales como particulares.
+          </p>
+          <div class="d-flex gap-3 flex-wrap">
+            <button class="btn btn-gradient-primary" data-bs-toggle="modal" data-bs-target="#modalNuevaTarea">
+              <i class="bi bi-plus-circle-fill fs-5"></i> Asignar Nueva Tarea
+            </button>
+            <button class="btn btn-gradient-accent" data-bs-toggle="modal" data-bs-target="#modalNuevoAlumno">
+              <i class="bi bi-person-plus-fill fs-5"></i> Registrar Alumno
+            </button>
+            <a href="./seguimiento.html" class="btn btn-outline-light rounded-pill px-4 fw-semibold d-inline-flex align-items-center gap-2">
+              <i class="bi bi-clipboard2-data"></i> Ir a Panel de Reportes
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-4 mt-4 mt-lg-0">
+          <div class="row g-3">
+            <div class="col-6">
+              <div class="stat-card-modern text-center p-3">
+                <div class="stat-icon-wrapper bg-primary-subtle text-primary mx-auto mb-2">
+                  <i class="bi bi-people-fill"></i>
+                </div>
+                <div class="stat-number-modern" id="statTotalAlumnos">0</div>
+                <div class="stat-label-modern">Alumnos en Sala</div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="stat-card-modern text-center p-3">
+                <div class="stat-icon-wrapper bg-info-subtle text-info mx-auto mb-2">
+                  <i class="bi bi-journal-text"></i>
+                </div>
+                <div class="stat-number-modern" id="statTotalTareas">0</div>
+                <div class="stat-label-modern">Tareas Activas</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="container py-5">
+
+    <!-- SECCIÓN 1: GALERÍA DE ALUMNOS REGISTRADOS -->
+    <section class="mb-5">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+        <div>
+          <h2 class="fw-bold mb-1"><i class="bi bi-person-lines-fill text-primary me-2"></i>Alumnos Registrados</h2>
+          <p class="text-muted mb-0">Fichas completas de estudiantes con fotos, descripciones de desarrollo y tutores.</p>
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+          <div class="input-group" style="max-width: 320px;">
+            <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
+            <input type="text" id="inputBuscarAlumno" class="form-control border-start-0" placeholder="Buscar por nombre o sala..." />
+          </div>
+          <button class="btn btn-gradient-accent btn-sm" data-bs-toggle="modal" data-bs-target="#modalNuevoAlumno">
+            <i class="bi bi-person-plus me-1"></i> + Nuevo Alumno
+          </button>
+        </div>
+      </div>
+
+      <!-- Tarjetas de Alumnos -->
+      <div class="row g-4" id="contenedorAlumnos">
+        <div class="col-12 text-center py-5">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Cargando alumnos...</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2: GESTIÓN DE TAREAS Y MURAL -->
+    <div class="row g-4">
+      <!-- Columna Izquierda: Tareas del Aula -->
+      <div class="col-lg-8">
+        <div class="card-modern p-4">
+          <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4 pb-3 border-bottom">
+            <div>
+              <h3 class="fw-bold mb-1"><i class="bi bi-list-task text-info me-2"></i>Gestor de Actividades y Tareas</h3>
+              <p class="text-muted small mb-0">Asigna consignas grupales o personalizadas para cada niño/a.</p>
+            </div>
+            <button class="btn btn-gradient-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalNuevaTarea">
+              <i class="bi bi-plus-lg me-1"></i> Crear Tarea
+            </button>
+          </div>
+
+          <!-- Filtros de Tareas -->
+          <div class="d-flex gap-2 mb-4 flex-wrap">
+            <button class="btn btn-sm btn-primary active rounded-pill px-3" data-filtro-tarea="todas">Todas</button>
+            <button class="btn btn-sm btn-outline-secondary rounded-pill px-3" data-filtro-tarea="generales">Generales (Toda la Sala)</button>
+            <button class="btn btn-sm btn-outline-secondary rounded-pill px-3" data-filtro-tarea="particulares">Particulares (Por Alumno)</button>
+            <button class="btn btn-sm btn-outline-secondary rounded-pill px-3" data-filtro-tarea="pendientes">Pendientes</button>
+            <button class="btn btn-sm btn-outline-secondary rounded-pill px-3" data-filtro-tarea="completadas">Completadas</button>
+          </div>
+
+          <!-- Listado de Tareas -->
+          <div id="contenedorListaTareas">
+            <div class="text-center py-4">
+              <div class="spinner-border text-info" role="status"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna Derecha: Comunicaciones & Saludos -->
+      <div class="col-lg-4">
+        <div class="card-modern p-4 mb-4">
+          <h4 class="fw-bold mb-3"><i class="bi bi-megaphone-fill text-warning me-2"></i>Mural de Mensajes y Saludos</h4>
+          <p class="text-muted small">Publica notas para las familias y terapeutas articuladores.</p>
+
+          <!-- Formulario Rápido de Comunicado -->
+          <form id="formNuevaComunicacion" class="mb-4 bg-light p-3 rounded-3">
+            <div class="mb-2">
+              <input type="text" id="comTitulo" class="form-control form-control-sm" placeholder="Título del saludo o aviso..." required />
+            </div>
+            <div class="mb-2">
+              <textarea id="comMensaje" class="form-control form-control-sm" rows="2" placeholder="Mensaje para el mural..." required></textarea>
+            </div>
+            <div class="row g-2 mb-2">
+              <div class="col-6">
+                <select id="comTipo" class="form-select form-select-sm">
+                  <option value="saludo">Saludo Diario</option>
+                  <option value="aviso_importante">Aviso Importante</option>
+                  <option value="sugerencia">Sugerencia</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <input type="text" id="comRemitente" class="form-control form-control-sm" placeholder="Tu nombre" value="Seño Docente" />
+              </div>
+            </div>
+            <button type="submit" class="btn btn-warning btn-sm w-100 fw-semibold text-dark">
+              <i class="bi bi-send-fill me-1"></i> Publicar en el Mural
+            </button>
+          </form>
+
+          <!-- Lista de Comunicados -->
+          <div id="contenedorComunicaciones">
+            <div class="text-center py-3"><div class="spinner-border spinner-border-sm text-secondary"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ==========================================================================
+       MODAL 1: ASIGNAR NUEVA TAREA (GENERAL O PARTICULAR)
+       ========================================================================== -->
+  <div class="modal fade" id="modalNuevaTarea" tabindex="-1" aria-labelledby="modalNuevaTareaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg rounded-4">
+        <div class="modal-header bg-primary text-white rounded-top-4">
+          <h5 class="modal-title fw-bold" id="modalNuevaTareaLabel">
+            <i class="bi bi-journal-plus me-2"></i> Asignar Nueva Actividad / Tarea
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <form id="formNuevaTarea">
+          <div class="modal-body p-4">
+            
+            <!-- Selector de Modalidad (General vs Particular) -->
+            <label class="form-label fw-bold mb-2">Modalidad de Asignación:</label>
+            <div class="d-flex gap-3 mb-3 p-2 bg-light rounded-3">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="tipoModalidad" id="tipoGeneral" value="general" checked />
+                <label class="form-check-label fw-semibold" for="tipoGeneral">
+                  <i class="bi bi-people-fill text-primary me-1"></i> Para toda la Sala (General)
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="tipoModalidad" id="tipoParticular" value="particular" />
+                <label class="form-check-label fw-semibold" for="tipoParticular">
+                  <i class="bi bi-person-fill text-info me-1"></i> Particular (Alumno Específico)
+                </label>
+              </div>
+            </div>
+
+            <!-- Selector de Alumno (Visible solo en particular) -->
+            <div class="mb-3" id="contenedorSelectorAlumno" style="display: none;">
+              <label for="selectAlumnoTarea" class="form-label fw-bold">Seleccionar Alumno Destinatario *</label>
+              <select id="selectAlumnoTarea" class="form-select">
+                <option value="" disabled selected>-- Cargando alumnos... --</option>
+              </select>
+            </div>
+
+            <!-- Título de la Tarea -->
+            <div class="mb-3">
+              <label for="tareaTitulo" class="form-label fw-bold">Título de la Actividad *</label>
+              <input type="text" id="tareaTitulo" class="form-control" placeholder="Ej: Collage de texturas o circuito de motricidad" required />
+            </div>
+
+            <!-- Área Pedagógica / Terapéutica -->
+            <div class="row g-3 mb-3">
+              <div class="col-md-6">
+                <label for="tareaArea" class="form-label fw-bold">Área de Trabajo</label>
+                <select id="tareaArea" class="form-select">
+                  <option value="Plástica y Expresión">Plástica y Expresión</option>
+                  <option value="Lenguaje y Comunicación">Lenguaje y Comunicación</option>
+                  <option value="Psicomotricidad">Psicomotricidad</option>
+                  <option value="Fonoaudiología">Fonoaudiología</option>
+                  <option value="Autonomía y Hábitos">Autonomía y Hábitos</option>
+                  <option value="Integración Sensorial">Integración Sensorial</option>
+                  <option value="General">General</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="tareaFechaLimite" class="form-label fw-bold">Fecha Límite</label>
+                <input type="date" id="tareaFechaLimite" class="form-control" />
+              </div>
+            </div>
+
+            <!-- Descripción de la Tarea -->
+            <div class="mb-3">
+              <label for="tareaDescripcion" class="form-label fw-bold">Consigna / Descripción Detallada *</label>
+              <textarea id="tareaDescripcion" class="form-control" rows="3" placeholder="Describe los materiales sugeridos y los pasos de la actividad..." required></textarea>
+            </div>
+
+            <!-- Nombre de quien asigna -->
+            <div class="mb-2">
+              <label for="tareaCreador" class="form-label fw-bold">Docente / Terapeuta a cargo</label>
+              <input type="text" id="tareaCreador" class="form-control" placeholder="Ej: Seño Laura (Sala Amarilla)" value="Seño Docente" />
+            </div>
+
+          </div>
+          <div class="modal-footer bg-light rounded-bottom-4">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-gradient-primary">
+              <i class="bi bi-check-circle-fill me-1"></i> Asignar Actividad
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 2: REGISTRAR NUEVO ALUMNO
+       ========================================================================== -->
+  <div class="modal fade" id="modalNuevoAlumno" tabindex="-1" aria-labelledby="modalNuevoAlumnoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg rounded-4">
+        <div class="modal-header bg-info text-white rounded-top-4">
+          <h5 class="modal-title fw-bold" id="modalNuevoAlumnoLabel">
+            <i class="bi bi-person-plus-fill me-2"></i> Registrar Nuevo Alumno en la Sala
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <form id="formNuevoAlumno">
+          <div class="modal-body p-4">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Nombre *</label>
+                <input type="text" id="alumnoNombre" class="form-control" placeholder="Ej: Lucas" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Apellido *</label>
+                <input type="text" id="alumnoApellido" class="form-control" placeholder="Ej: Martínez" required />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label fw-bold">Edad (años) *</label>
+                <input type="number" id="alumnoEdad" class="form-control" min="2" max="10" value="4" required />
+              </div>
+              <div class="col-md-8">
+                <label class="form-label fw-bold">Sala / Grado *</label>
+                <input type="text" id="alumnoSala" class="form-control" placeholder="Ej: Sala Amarilla (4 años)" value="Sala Amarilla (4 años)" required />
+              </div>
+              <div class="col-12">
+                <label class="form-label fw-bold">URL de la Foto del Alumno</label>
+                <input type="url" id="alumnoFoto" class="form-control" placeholder="https://images.unsplash.com/... (opcional)" />
+                <small class="text-muted">Si se deja en blanco, se asignará un avatar infantil automático.</small>
+              </div>
+              <div class="col-12">
+                <label class="form-label fw-bold">Diagnóstico / Área de Enfoque Pedagógico *</label>
+                <input type="text" id="alumnoDiagnostico" class="form-control" placeholder="Ej: Estimulación del lenguaje, integración sensorial, etc." required />
+              </div>
+              <div class="col-12">
+                <label class="form-label fw-bold">Observaciones Generales</label>
+                <textarea id="alumnoObservaciones" class="form-control" rows="2" placeholder="Gustos, preferencias, dinámicas que mejor responden..."></textarea>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Nombre del Tutor / Familiar</label>
+                <input type="text" id="alumnoTutorNombre" class="form-control" placeholder="Ej: Mariana Pérez" />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Teléfono de Contacto Familiar</label>
+                <input type="text" id="alumnoTutorTel" class="form-control" placeholder="+54 9 3704 000000" />
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer bg-light rounded-bottom-4">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-gradient-accent">
+              <i class="bi bi-save2-fill me-1"></i> Guardar Alumno
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer-modern">
+    <div class="container text-center">
+      <p class="mb-1 text-white fw-semibold">RED NEC – Nexo Educativo Colaborativo</p>
+      <p class="small text-muted mb-0">Plataforma de Integración Docente-Terapeuta-Familia | Formosa, Argentina © 2026</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/docente.js"></script>
+</body>
+</html>
