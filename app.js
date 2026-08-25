@@ -6,7 +6,7 @@ import { fileURLToPath } from "url";
 import sequelize from "./backend/src/config/database.js";
 import { seedInitialData } from "./backend/src/config/seed.js";
 
-// Rutas
+// Rutas API
 import authRoutes from "./backend/src/routes/auth.js";
 import verificarToken from "./backend/src/middleware/auth.js";
 import reporteRoutes from "./backend/src/routes/reporte.js";
@@ -32,36 +32,50 @@ const PORT = process.env.PORT || 3001;
 // ======================================
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Servir frontend compilado de React y estáticos tradicionales
-const reactDistPath = path.join(__dirname, "frontend-react", "dist");
-const frontendStaticPath = path.join(__dirname, "frontend");
+// ======================================
+// SERVIR ARCHIVOS ESTÁTICOS DEL FRONTEND
+// ======================================
+const frontendPath = path.join(__dirname, "frontend");
+const pagesPath = path.join(__dirname, "frontend", "pages");
+const htmlPath = path.join(__dirname, "frontend", "html");
 
-app.use("/assets", express.static(path.join(reactDistPath, "assets")));
-app.use("/frontend", express.static(frontendStaticPath));
-app.use(express.static(frontendStaticPath));
+app.use(express.static(frontendPath));
+app.use(express.static(pagesPath));
+app.use("/frontend", express.static(frontendPath));
+app.use("/pages", express.static(pagesPath));
+app.use("/html", express.static(htmlPath));
+app.use("/assets", express.static(path.join(frontendPath, "assets")));
+app.use("/css", express.static(path.join(frontendPath, "css")));
+app.use("/js", express.static(path.join(frontendPath, "js")));
 
-// Rutas directas para la App React
-app.get(["/app", "/react", "/app/*"], (req, res) => {
-  res.sendFile(path.join(reactDistPath, "index.html"));
+// ======================================
+// RUTAS AMIGABLES DE VISTAS (SIN CAMBIAR URL)
+// ======================================
+app.get("/", (req, res) => {
+  res.sendFile(path.join(pagesPath, "index.html"));
 });
 
-// ======================================
-// CONEXIÓN CON MYSQL & SEED
-// ======================================
-(async () => {
-  try {
-    await sequelize.authenticate();
-    console.log("✅ Conexión establecida con MySQL");
+app.get("/index.html", (req, res) => {
+  res.sendFile(path.join(pagesPath, "index.html"));
+});
 
-    await sequelize.sync({ alter: true }); // actualiza tablas si cambian modelos
-    console.log("✅ Modelos sincronizados");
+app.get(["/login", "/registro", "/acceso"], (req, res) => {
+  res.sendFile(path.join(htmlPath, "index.html"));
+});
 
-    await seedInitialData();
-  } catch (error) {
-    console.error("❌ Error al conectar o sincronizar con MySQL:", error.message);
-  }
-})();
+app.get("/seguimiento", (req, res) => {
+  res.sendFile(path.join(pagesPath, "seguimiento.html"));
+});
+
+app.get("/informacion", (req, res) => {
+  res.sendFile(path.join(pagesPath, "informacion.html"));
+});
+
+app.get("/contacto", (req, res) => {
+  res.sendFile(path.join(pagesPath, "contacto.html"));
+});
 
 // ======================================
 // RUTAS DE LA API
@@ -75,7 +89,7 @@ app.use("/api/reportes", reporteRoutes);
 app.use("/api/contenidos", contenidoRoutes);
 app.use("/api/terapeutas", terapeutaRoutes);
 
-// Ruta protegida
+// Ruta protegida de perfil
 app.get("/api/perfil", verificarToken, (req, res) => {
   res.json({
     msg: "Acceso permitido",
@@ -83,24 +97,41 @@ app.get("/api/perfil", verificarToken, (req, res) => {
   });
 });
 
-// Redirección raíz al portal React moderno
-app.get("/", (req, res) => {
-  res.sendFile(path.join(reactDistPath, "index.html"));
-});
+// ======================================
+// CONEXIÓN CON MYSQL & SEED
+// ======================================
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log("✅ Conexión establecida con MySQL");
+
+    await sequelize.sync({ alter: true });
+    console.log("✅ Modelos sincronizados con la base de datos");
+
+    await seedInitialData();
+  } catch (error) {
+    console.error("❌ Error al conectar o sincronizar con MySQL:", error.message);
+  }
+})();
 
 // ======================================
 // MANEJO DE ERRORES GLOBAL
 // ======================================
 app.use((err, req, res, next) => {
   console.error("❌ Error inesperado:", err);
-  res.status(500).json({ mensaje: "Error interno del servidor" });
+  res.status(500).json({ mensaje: "Error interno del servidor", error: err.message });
 });
 
 // ======================================
 // INICIAR SERVIDOR
 // ======================================
 app.listen(PORT, () => {
-  console.log(`🚀 Servidor RED NEC corriendo en http://localhost:${PORT}`);
-  console.log(`✨ Plataforma React: http://localhost:${PORT}/`);
-  console.log(`⚡ Vite Dev Server (si se usa): http://localhost:5173`);
+  console.log(`\n======================================================`);
+  console.log(`🚀 Servidor RED NEC activo en http://localhost:${PORT}`);
+  console.log(`🏠 Portal Principal:   http://localhost:${PORT}/`);
+  console.log(`🔐 Acceso / Login:     http://localhost:${PORT}/html/index.html (o /login)`);
+  console.log(`📊 Seguimiento:        http://localhost:${PORT}/pages/seguimiento.html (o /seguimiento)`);
+  console.log(`ℹ️  Información:        http://localhost:${PORT}/pages/informacion.html (o /informacion)`);
+  console.log(`📞 Contacto:           http://localhost:${PORT}/pages/contacto.html (o /contacto)`);
+  console.log(`======================================================\n`);
 });

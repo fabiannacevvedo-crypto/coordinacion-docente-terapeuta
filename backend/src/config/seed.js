@@ -3,6 +3,7 @@ import Tarea from "../models/tarea.js";
 import Asistencia from "../models/asistencia.js";
 import Comunicacion from "../models/comunicacion.js";
 import Reporte from "../models/reporte.js";
+import Contenido from "../models/contenido.js";
 
 export async function seedInitialData() {
   try {
@@ -139,7 +140,41 @@ export async function seedInitialData() {
         }
       ]);
 
-      console.log("✅ Datos de prueba creados exitosamente.");
+      // Reportes iniciales
+      await Reporte.bulkCreate([
+        { alumnoId: alumnos[0].id, progreso: 85, estado: "bueno", observaciones: "Gran avance en vocalización y respuesta a dinámicas lúdicas." },
+        { alumnoId: alumnos[1].id, progreso: 70, estado: "regular", observaciones: "Buen desempeño con plastilina, requiere afianzar agarre en pinza." },
+        { alumnoId: alumnos[2].id, progreso: 60, estado: "atencion", observaciones: "Presenta dispersión en actividades largas, se sugieren pausas activas." },
+        { alumnoId: alumnos[3].id, progreso: 90, estado: "bueno", observaciones: "Excelente autonomía y colaboración en las rutinas de la sala." }
+      ]);
+
+      console.log("✅ Datos de prueba de alumnos, tareas, asistencias y reportes creados.");
+    }
+
+    // Sembrar contenidos si está vacío
+    const totalContenidos = await Contenido.count();
+    if (totalContenidos === 0) {
+      await Contenido.bulkCreate([
+        {
+          titulo: "Guía de Estimulación Temprana y Motricidad Fina",
+          descripcion: "Estrategias lúdicas para aplicar tanto en el aula de nivel inicial como en el hogar.",
+          categoria: "Psicomotricidad",
+          urlRecurso: "https://www.unicef.org"
+        },
+        {
+          titulo: "Actividades de Comunicación Aumentativa y Fonoaudiología",
+          descripcion: "Fichas descargables y juegos orofaciales para potenciar el desarrollo del lenguaje.",
+          categoria: "Fonoaudiología",
+          urlRecurso: "https://www.educ.ar"
+        },
+        {
+          titulo: "Pautas de Articulación y Acuerdos Docente-Familia",
+          descripcion: "Cuadernillo orientativo para fortalecer la continuidad de hábitos y rutinas escolares.",
+          categoria: "Institucional",
+          urlRecurso: "https://www.argentina.gob.ar/educacion"
+        }
+      ]);
+      console.log("✅ Contenidos educativos iniciales creados.");
     }
   } catch (error) {
     console.error("⚠️ Nota sobre seed:", error.message);
